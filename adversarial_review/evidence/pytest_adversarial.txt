@@ -1,0 +1,79 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.2.0, pluggy-1.7.0
+rootdir: /home/user/eu-flex-model
+configfile: pyproject.toml
+plugins: typeguard-4.6.0, platformdirs-4.14.5
+collected 11 items
+
+adversarial_review/tests/test_indicator_adversarial.py FFFFFFFFFFF       [100%]
+
+=================================== FAILURES ===================================
+E   AssertionError: calculate_residual_load returned the cached DA result for the ID network
+    assert 1000.0 == 1500.0 ± 0.0015
+      
+      comparison failed
+      Obtained: 1000.0
+      Expected: 1500.0 ± 0.0015
+/home/user/eu-flex-model/adversarial_review/tests/test_indicator_adversarial.py:96: AssertionError: calculate_residual_load returned the cached DA result for the ID network
+E   assert 0.0 == 200.0 ± 2.0e-04
+      
+      comparison failed
+      Obtained: 0.0
+      Expected: 200.0 ± 2.0e-04
+/home/user/eu-flex-model/adversarial_review/tests/test_indicator_adversarial.py:107: assert 0.0 == 200.0 ± 2.0e-04
+E   AssertionError: Weekly need of ISO week 1 = 144,000 MWh although 1-6 January is perfectly flat: 30-31 December was pooled into week 1
+    assert 144000.0 == 0.0 ± 1.0e-06
+      
+      comparison failed
+      Obtained: 144000.0
+      Expected: 0.0 ± 1.0e-06
+/home/user/eu-flex-model/adversarial_review/tests/test_indicator_adversarial.py:126: AssertionError: Weekly need of ISO week 1 = 144,000 MWh although 1-6 January is perfectly flat: 30-31 December was pooled into week 1
+E   AssertionError: Sum of contributions 1,033,405 MWh != daily need 4,121,092 MWh (solar counted as -3,087,687 MWh)
+    assert 1033404.946950051 == 4121091.9473691047 ± 4.1e+03
+      
+      comparison failed
+      Obtained: 1033404.946950051
+      Expected: 4121091.9473691047 ± 4.1e+03
+----------------------------- Captured stdout call -----------------------------
+need 4121091.9473691047 contributions {'Gas': 4121091.9512000293, 'Solar (PV)': -3087687.0042499783}
+/home/user/eu-flex-model/adversarial_review/tests/test_indicator_adversarial.py:152: AssertionError: Sum of contributions 1,033,405 MWh != daily need 4,121,092 MWh (solar counted as -3,087,687 MWh)
+E   AssertionError: units = MWh
+    assert 'MWh' in ('MW', 'MW/h')
+/home/user/eu-flex-model/adversarial_review/tests/test_indicator_adversarial.py:166: AssertionError: units = MWh
+E   ValueError: day is out of range for month
+timestamps.pyx:159: ValueError: day is out of range for month
+E   AssertionError: hour-of-year runs to 8784 with gaps: [np.int64(1), np.int64(25)]
+    assert (np.int64(8784) == 8760)
+     +  where np.int64(8784) = <built-in method max of numpy.ndarray object at 0x7f664ca3a430>()
+     +    where <built-in method max of numpy.ndarray object at 0x7f664ca3a430> = array([   1,    2,    3, ..., 8782, 8783, 8784], shape=(8760,)).max
+/home/user/eu-flex-model/adversarial_review/tests/test_indicator_adversarial.py:187: AssertionError: hour-of-year runs to 8784 with gaps: [np.int64(1), np.int64(25)]
+E   AssertionError: Cap rose to 5500.0 after 1 event(s) but no scarcity price was updated: they are only rewritten when equal to 5000
+    assert np.False_
+     +  where np.False_ = any()
+     +    where any = snapshot               \n2030-01-02 18:00:00  N2    4510.0\n2030-01-04 18:00:00  N2    4510.0\n2030-01-06 18:00:00  N2    4510.0\n2030-02-10 18:00:00  N2    4510.0\ndtype: float64 > 4510.0.any
+/home/user/eu-flex-model/adversarial_review/tests/test_indicator_adversarial.py:218: AssertionError: Cap rose to 5500.0 after 1 event(s) but no scarcity price was updated: they are only rewritten when equal to 5000
+E   AssertionError: max_abs_npv = 5,000,000 > threshold although no capacity can move: convergence is unreachable
+    assert np.float64(5000000.0) <= 70000
+/home/user/eu-flex-model/adversarial_review/tests/test_indicator_adversarial.py:253: AssertionError: max_abs_npv = 5,000,000 > threshold although no capacity can move: convergence is unreachable
+E   AssertionError: EVA would declare convergence with an asset at NPV = -1,000,000 EUR/MW
+    assert not True
+/home/user/eu-flex-model/adversarial_review/tests/test_indicator_adversarial.py:272: AssertionError: EVA would declare convergence with an asset at NPV = -1,000,000 EUR/MW
+E   AssertionError: never converges: [(0.0, 300000.0, np.False_), (800.0, -100000.0, np.False_), (0.0, 300000.0, np.False_), (800.0, -100000.0, np.False_), (0.0, 300000.0, np.False_), (800.0, -100000.0, np.False_), (0.0, 300000.0, np.False_), (800.0, -100000.0, np.False_), (0.0, 300000.0, np.False_), (800.0, -100000.0, np.False_), (0.0, 300000.0, np.False_), (800.0, -100000.0, np.False_)]
+    assert False
+     +  where False = any(<generator object test_F11c_fixed_step_oscillation.<locals>.<genexpr> at 0x7f664c939970>)
+----------------------------- Captured stdout call -----------------------------
+[(0.0, 300000.0, np.False_), (800.0, -100000.0, np.False_), (0.0, 300000.0, np.False_), (800.0, -100000.0, np.False_), (0.0, 300000.0, np.False_), (800.0, -100000.0, np.False_), (0.0, 300000.0, np.False_), (800.0, -100000.0, np.False_), (0.0, 300000.0, np.False_), (800.0, -100000.0, np.False_), (0.0, 300000.0, np.False_), (800.0, -100000.0, np.False_)]
+/home/user/eu-flex-model/adversarial_review/tests/test_indicator_adversarial.py:296: AssertionError: never converges: [(0.0, 300000.0, np.False_), (800.0, -100000.0, np.False_), (0.0, 300000.0, np.False_), (800.0, -100000.0, np.False_), (0.0, 300000.0, np.False_), (800.0, -100000.0, np.False_), (0.0, 300000.0, np.False_), (800.0, -100000.0, np.False_), (0.0, 300000.0, np.False_), (800.0, -100000.0, np.False_), (0.0, 300000.0, np.False_), (800.0, -100000.0, np.False_)]
+=========================== short test summary info ============================
+FAILED adversarial_review/tests/test_indicator_adversarial.py::test_F01_residual_load_cache_ignores_timeseries
+FAILED adversarial_review/tests/test_indicator_adversarial.py::test_F01_short_term_need_zero_on_collision
+FAILED adversarial_review/tests/test_indicator_adversarial.py::test_F02_iso_week_merges_december_into_week1
+FAILED adversarial_review/tests/test_indicator_adversarial.py::test_F03_contributions_sum_to_need
+FAILED adversarial_review/tests/test_indicator_adversarial.py::test_F04_max_ramp_units
+FAILED adversarial_review/tests/test_indicator_adversarial.py::test_F05_leap_climate_year_crash
+FAILED adversarial_review/tests/test_indicator_adversarial.py::test_F05b_leap_target_year_hour_index_gap
+FAILED adversarial_review/tests/test_indicator_adversarial.py::test_F10_price_cap_update_ignores_scarcity_prices_not_equal_to_cap
+FAILED adversarial_review/tests/test_indicator_adversarial.py::test_F11a_asset_at_bound_blocks_convergence_forever
+FAILED adversarial_review/tests/test_indicator_adversarial.py::test_F11b_blocked_unprofitable_asset_reported_converged
+FAILED adversarial_review/tests/test_indicator_adversarial.py::test_F11c_fixed_step_oscillation
+============================== 11 failed in 5.67s ==============================

@@ -1,0 +1,28 @@
+================================================================================
+EVA INTEGRATION TEST REPORT
+================================================================================
+
+Overall Status: FAILED
+
+1. Market State of Charge Within Pre-optimization Limits
+------------------------------------------------------------
+✗ FAILED - Violations found:
+
+  Intraday violations:
+    N3_Hydro:
+      2013-04-05 00:00:00: actual=352503.24 MW > limit=393971.46 MW
+
+2. Intraday Dispatch Within Day-ahead Commitment Limits
+------------------------------------------------------------
+✗ FAILED - Violations found:
+  N1 Gas:
+    2013-01-01 10:00:00: dispatch=0.2448 pu not in [0.3911, 0.9690]
+    2013-01-01 11:00:00: dispatch=0.2631 pu not in [0.3911, 0.9690]
+    2013-01-01 12:00:00: dispatch=0.2736 pu not in [0.3870, 0.9522]
+    ... and 7609 more violations
+
+3. Price-Flow Consistency
+------------------------------------------------------------
+✓ PASSED - All flows consistent with prices
+
+================================================================================
