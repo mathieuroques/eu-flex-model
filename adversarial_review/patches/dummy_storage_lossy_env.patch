@@ -1,0 +1,46 @@
+diff --git a/src/euflex/eu_flex_model/scripts/run_dummy_storage_optimization.py b/src/euflex/eu_flex_model/scripts/run_dummy_storage_optimization.py
+index e39cdd7..e34ee26 100644
+--- a/src/euflex/eu_flex_model/scripts/run_dummy_storage_optimization.py
++++ b/src/euflex/eu_flex_model/scripts/run_dummy_storage_optimization.py
+@@ -1006,6 +1006,21 @@ def optimize_dummy_storage(
+         cyclic_state_of_charge=True,
+     )
+     n.add("Carrier", "Dummy Storage", color="#005fb8", nice_name="Dummy Storage")
++    # ADVERSARIAL-REVIEW EXPERIMENT (not part of the model): lossy dummy storage.
++    # EUFLEX_DS_RTE_MAP="4:0.85,50:0.60,200:0.35" sets the round-trip efficiency
++    # per energy-to-power ratio (split equally between charge and discharge).
++    import os as _os
++
++    _rte_map = _os.environ.get("EUFLEX_DS_RTE_MAP")
++    _lossy = False
++    if _rte_map:
++        _m = {float(k): float(v) for k, v in (kv.split(":") for kv in _rte_map.split(","))}
++        _rte = _m.get(float(max_hours))
++        if _rte is not None and _rte < 1.0:
++            n.storage_units.loc[dummies, "efficiency_store"] = _rte**0.5
++            n.storage_units.loc[dummies, "efficiency_dispatch"] = _rte**0.5
++            _lossy = True
++            logging.info(f"EXPERIMENT: lossy dummy storage, round-trip efficiency {_rte}")
+ 
+     # Add load spillage (optional)
+     if enable_load_spillage and "load spillage" not in n.carriers.index:
+@@ -1029,7 +1044,8 @@ def optimize_dummy_storage(
+     # Create optimization model
+     logging.info("Creating optimization model")
+     n.optimize.create_model()  # ty: ignore[missing-argument]
+-    add_dummy_storage_hull_constraints(n, dummies, float(max_hours))
++    if not _lossy:
++        add_dummy_storage_hull_constraints(n, dummies, float(max_hours))
+ 
+     # Define generator sets and calculate availability
+     m = n.model
+@@ -1190,7 +1206,8 @@ def optimize_dummy_storage(
+     )
+ 
+     if status == "ok":
+-        net_dummy_storage_flows(n, dummies)
++        if not _lossy:
++            net_dummy_storage_flows(n, dummies)
+ 
+     return n, status, condition
+ 

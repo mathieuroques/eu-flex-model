@@ -1,0 +1,18 @@
+diff --git a/src/euflex/eu_flex_model/scripts/market_functions.py b/src/euflex/eu_flex_model/scripts/market_functions.py
+index e5861df..655e896 100644
+--- a/src/euflex/eu_flex_model/scripts/market_functions.py
++++ b/src/euflex/eu_flex_model/scripts/market_functions.py
+@@ -3267,6 +3267,13 @@ def run_market_model(
+     config_options = config["solving"]["options"]
+     horizon = config_options["horizon"]
+     overlap = config_options["overlap"]
++    # ADVERSARIAL-REVIEW EXPERIMENT (not part of the model): shorter intraday
++    # foresight, set through environment variables, DA unchanged.
++    import os as _os
++
++    if not is_day_ahead and _os.environ.get("EUFLEX_ID_HORIZON"):
++        horizon = int(_os.environ["EUFLEX_ID_HORIZON"])
++        overlap = int(_os.environ.get("EUFLEX_ID_OVERLAP", "0"))
+     linearized_unit_commitment = config_options["linearized_unit_commitment"]
+ 
+     fail_on_infeasibility = config["eva"]["fail_on_infeasibility"]
