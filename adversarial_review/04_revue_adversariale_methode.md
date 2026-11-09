@@ -255,12 +255,12 @@ La viabilité des actifs de pointe et de flexibilité repose sur **quelques diza
 | 0 (année complète) | 30 000 | 100 | +410 | −269 |
 | 1 (semaines représentatives) | 27 000 | **3 100** | −900 | −417 |
 | 2 | 24 145 | **245** | −532 | −119 |
-| 3 | — | — | — | — |
+| 3 | arrêt : infaisabilité (mode par défaut) ; 3 infaisables + 9 plantages sur 12 semaines (mode tolérant) | | | |
 
 - **Dépassement puis effondrement** de la batterie (+3 000 MW puis −2 855 MW) : l'oscillation à pas fixe démontrée par test unitaire (F-11c) est **observée** dans l'EVA réelle.
 - À l'itération 3, une fenêtre day-ahead devient **infaisable** malgré le délestage, et **toute la boucle EVA s'arrête** (comportement par défaut).
 - Les VAN des actifs non modifiés varient fortement entre l'itération 0 (année complète) et 1 (semaines représentatives) : éolien N1 −30 %, hydraulique −38 %, nucléaire de +2 326 à −12 k€/MW. Les changements de capacité et l'approximation par clustering ne sont pas séparables ici, mais l'ampleur pose la question de la validation du clustering pour l'EVA.
-- Suite de la trajectoire (relance tolérante aux fenêtres infaisables) : §4.5.
+- **Relance en mode tolérant** (`fail_on_infeasibility: false`, option prévue par le modèle) : à l'itération 3, sur les **12 semaines représentatives, 3 échouent par infaisabilité et 9 plantent** en aval (`KeyError` sur les générateurs engageables `N1 Gas` et `N2 Nuclear`, le code ne gérant pas une fenêtre sans solution). **L'EVA ne peut donc pas dépasser l'itération 2 sur la configuration EVA d'ACER, dans aucun des deux modes.** Hypothèse non vérifiée : les besoins de réserves FCR/FRR sont des contraintes dures (`reserve_shedding: false` par défaut), que la baisse de la capacité gaz rend inatteignables, alors que le délestage ne couvre que l'énergie. Réserve : ce run utilise le clustering temporel documenté ; nous n'avons pas testé l'année complète à l'itération 3. Preuves : `evidence/eva_clustered_run_*_summary.txt`.
 
 **(f) Prévision intraday réduite à 8 h** (oracle) : avec les réglages par défaut, **l'intraday devient infaisable** dès la fenêtre 21 (4 janvier) malgré les variables de délestage. La formulation dépend donc d'une prévision longue pour rester faisable. En mode tolérant : 17 fenêtres infaisables sur les 811 premières. Résultats complets : §4.5. *(Constat annexe : les fichiers LP d'infaisabilité sont écrits dans `var/teaser/` à la racine du dépôt, quel que soit le répertoire de travail du run, d'où un risque d'écrasement entre runs.)*
 

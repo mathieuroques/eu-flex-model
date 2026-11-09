@@ -63,7 +63,7 @@ Profit per MW is interpolated between target years and **held constant from the 
 
 **1.5 The EVA equilibrium is ill-defined and its convergence is not reported.**
 Fixed MW steps (default 800 MW for every asset and zone) can oscillate without converging. The convergence test can be blocked by assets saturated at their bounds, or wrongly declared "converged" when monotonicity constraints block an unprofitable asset. The status (e.g. "Aborted") is not reported in the published outputs.
-In ACER's own EVA configuration (teaser-eva, with the documented temporal clustering) we observe the battery capacity jump from 100 to 3 100 MW and fall back to 245 MW within two iterations (NPV +410 → −900 → −532 k€/MW). At iteration 3 a day-ahead window becomes infeasible despite load shedding, and the whole EVA aborts under default settings.
+In ACER's own EVA configuration (teaser-eva, with the documented temporal clustering) we observe the battery capacity jump from 100 to 3 100 MW and fall back to 245 MW within two iterations (NPV +410 → −900 → −532 k€/MW). At iteration 3 a day-ahead window becomes infeasible despite load shedding, and the whole EVA aborts under default settings. With the model's tolerant option (`fail_on_infeasibility: false`), 3 of the 12 representative weeks remain infeasible and 9 crash downstream: **the EVA cannot proceed beyond iteration 2 on ACER's EVA configuration.**
 → **Request:** use an equilibrium or co-optimisation formulation with guaranteed convergence, or adaptive steps, and publish convergence status, residual NPV and saturated assets with every result.
 
 **1.6 Price formation.**
