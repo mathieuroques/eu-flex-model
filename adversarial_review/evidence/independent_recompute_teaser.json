@@ -1,0 +1,82 @@
+
+
+ "independent_daily_need_MWh": {
+  "N1": 27763562.0,
+  "N2": 36791794.0,
+  "N3": 13974511.0
+ },
+ "independent_weekly_need_calendar_weeks_MWh": {
+  "N1": 39398782.0,
+  "N2": 8879298.0,
+  "N3": 8313036.0
+ },
+ "independent_weekly_need_iso_weeks_MWh": {
+  "N1": 40729373.0,
+  "N2": 9042090.0,
+  "N3": 8317111.0
+ },
+ "independent_seasonal_need_MWh": {
+  "N1": 20589418.0,
+  "N2": 27594667.0,
+  "N3": 6989901.0
+ },
+ "independent_forecast_error_p99_9_MW": {
+  "N1": 11664.9,
+  "N2": 6183.4,
+  "N3": 1813.8
+ },
+ "independent_forecast_error_p0_1_MW": {
+  "N1": -12523.1,
+  "N2": -7660.8,
+  "N3": -1769.9
+ },
+ "independent_forecast_error_std_MW": {
+  "N1": 3660.4,
+  "N2": 1416.5,
+  "N3": 524.2
+ },
+ "independent_max_abs_ramp_MW": {
+  "N1": 13361.0,
+  "N2": 7628.0,
+  "N3": 3113.0
+ },
+ "model_output_groups": {
+  "base": 73
+ },
+ "model_vars_with_need_or_contrib": [
+  "aggregated_short_term_need_downward_p0_1",
+  "aggregated_short_term_need_downward_p1",
+  "aggregated_short_term_need_upward_p99",
+  "aggregated_short_term_need_upward_p99_9",
+  "cross_border_contributions_daily",
+  "cross_border_contributions_seasonal",
+  "cross_border_contributions_weekly",
+  "daily_flexibility_need",
+  "daily_flexibility_need_aggregated",
+  "maximum_ramping_requirement",
+  "ramping_contribution_n1",
+  "ramping_contribution_n10",
+  "ramping_contribution_n25",
+  "ramping_shortfall_downward",
+  "ramping_shortfall_downward_aggregated",
+  "ramping_shortfall_upward",
+  "ramping_shortfall_upward_aggregated",
+  "seasonal_flexibility_need",
+  "short_term_cross_border_contributions_hourly",
+  "short_term_need_downward_hourly",
+  "short_term_need_downward_p0_1",
+  "short_term_need_downward_p1",
+  "short_term_need_hourly",
+  "short_term_need_upward_hourly",
+  "short_term_need_upward_p99",
+  "short_term_need_upward_p99_9",
+  "short_term_technology_contributions_hourly",
+  "technology_contributions_daily",
+  "technology_contributions_seasonal",
+  "technology_contributions_weekly",
+  "total_short_term_need_downward",
+  "total_short_term_need_upward",
+  "weekly_flexibility_need",
+  "weekly_flexibility_need_aggregated"
+ ]
+}

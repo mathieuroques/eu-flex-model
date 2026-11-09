@@ -1,0 +1,120 @@
+localrule build_base_network:
+1 of 21 steps (5%) done
+localrule resample_network:
+2 of 21 steps (10%) done
+localrule build_base_network:
+3 of 21 steps (14%) done
+localrule plan_storage:
+4 of 21 steps (19%) done
+localrule plan_maintenance:
+5 of 21 steps (24%) done
+localrule generate_forced_outages:
+6 of 21 steps (29%) done
+localrule run_day_ahead:
+7 of 21 steps (33%) done
+localrule run_intraday:
+8 of 21 steps (38%) done
+localrule update_prices:
+localrule check_infeasibilities:
+9 of 21 steps (43%) done
+10 of 21 steps (48%) done
+localrule cleanup_before_cap_update:
+11 of 21 steps (52%) done
+12 of 21 steps (57%) done
+localrule compute_npv:
+13 of 21 steps (62%) done
+14 of 21 steps (67%) done
+localrule check_infeasibilities:
+localrule determine_clustering_mode:
+15 of 79 steps (19%) done
+16 of 79 steps (20%) done
+localrule build_base_network:
+localrule build_base_network:
+localrule cleanup_iteration:
+17 of 79 steps (22%) done
+18 of 79 steps (23%) done
+localrule slice_network_to_centroid:
+localrule slice_network_to_centroid:
+localrule slice_network_to_centroid:
+localrule slice_network_to_centroid:
+19 of 79 steps (24%) done
+localrule slice_network_to_centroid:
+20 of 79 steps (25%) done
+localrule slice_network_to_centroid:
+21 of 79 steps (27%) done
+localrule slice_network_to_centroid:
+22 of 79 steps (28%) done
+localrule slice_network_to_centroid:
+23 of 79 steps (29%) done
+localrule slice_network_to_centroid:
+24 of 79 steps (30%) done
+localrule slice_network_to_centroid:
+25 of 79 steps (32%) done
+localrule slice_network_to_centroid:
+26 of 79 steps (33%) done
+localrule slice_network_to_centroid:
+27 of 79 steps (34%) done
+localrule slice_network_to_centroid:
+28 of 79 steps (35%) done
+localrule run_day_ahead_centroid:
+29 of 79 steps (37%) done
+localrule slice_network_to_centroid:
+30 of 79 steps (38%) done
+localrule slice_network_to_centroid:
+31 of 79 steps (39%) done
+localrule slice_network_to_centroid:
+32 of 79 steps (41%) done
+localrule slice_network_to_centroid:
+33 of 79 steps (42%) done
+localrule slice_network_to_centroid:
+34 of 79 steps (43%) done
+localrule slice_network_to_centroid:
+35 of 79 steps (44%) done
+localrule run_day_ahead_centroid:
+36 of 79 steps (46%) done
+localrule slice_network_to_centroid:
+37 of 79 steps (47%) done
+localrule run_day_ahead_centroid:
+38 of 79 steps (48%) done
+localrule run_day_ahead_centroid:
+39 of 79 steps (49%) done
+localrule run_day_ahead_centroid:
+40 of 79 steps (51%) done
+localrule run_intraday_centroid:
+41 of 79 steps (52%) done
+localrule run_day_ahead_centroid:
+42 of 79 steps (53%) done
+localrule run_intraday_centroid:
+43 of 79 steps (54%) done
+localrule run_intraday_centroid:
+44 of 79 steps (56%) done
+localrule run_intraday_centroid:
+45 of 79 steps (57%) done
+localrule run_day_ahead_centroid:
+46 of 79 steps (58%) done
+localrule slice_network_to_centroid:
+47 of 79 steps (59%) done
+localrule run_day_ahead_centroid:
+48 of 79 steps (61%) done
+localrule slice_network_to_centroid:
+49 of 79 steps (62%) done
+localrule run_intraday_centroid:
+50 of 79 steps (63%) done
+localrule slice_network_to_centroid:
+51 of 79 steps (65%) done
+localrule run_day_ahead_centroid:
+52 of 79 steps (66%) done
+localrule run_day_ahead_centroid:
+53 of 79 steps (67%) done
+localrule run_intraday_centroid:
+54 of 79 steps (68%) done
+localrule run_intraday_centroid:
+55 of 79 steps (70%) done
+localrule run_intraday_centroid:
+56 of 79 steps (71%) done
+localrule slice_network_to_centroid:
+57 of 79 steps (72%) done
+localrule run_intraday_centroid:
+58 of 79 steps (73%) done
+localrule run_day_ahead_centroid:
+59 of 79 steps (75%) done

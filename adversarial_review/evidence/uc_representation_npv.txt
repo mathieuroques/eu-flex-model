@@ -1,0 +1,149 @@
+NPV per MW (kEUR/MW), first target year
+                             teaser  uc10_lp  uc10_milp  meth_milp
+component   name                                                  
+Generator   N1 Gas           -269.0      NaN        NaN    -1814.0
+            N1 Gas U00          NaN     78.0       85.0        NaN
+            N1 Gas U01          NaN   -212.0     -168.0        NaN
+            N1 Gas U02          NaN   -251.0     -242.0        NaN
+            N1 Gas U03          NaN   -272.0     -256.0        NaN
+            N1 Gas U04          NaN   -285.0     -286.0        NaN
+            N1 Gas U05          NaN   -309.0     -326.0        NaN
+            N1 Gas U06          NaN   -316.0     -331.0        NaN
+            N1 Gas U07          NaN   -319.0     -338.0        NaN
+            N1 Gas U08          NaN   -312.0     -328.0        NaN
+            N1 Gas U09          NaN   -312.0     -313.0        NaN
+            N1 Solar (PV)    1414.0   1386.0     1320.0     1206.0
+            N1 Wind Onshore  2596.0   2604.0     2562.0     2090.0
+            N1_DSR             75.0     79.0      495.0    12258.0
+            N2 Nuclear       2326.0      NaN        NaN      385.0
+            N2 Nuclear U00      NaN   2128.0     2034.0        NaN
+            N2 Nuclear U01      NaN   2234.0     2135.0        NaN
+            N2 Nuclear U02      NaN   2136.0     2047.0        NaN
+            N2 Nuclear U03      NaN   2301.0     2203.0        NaN
+            N2 Nuclear U04      NaN   2167.0     2079.0        NaN
+            N2 Nuclear U05      NaN   2312.0     2213.0        NaN
+            N2 Nuclear U06      NaN   2126.0     2030.0        NaN
+            N2 Nuclear U07      NaN   2164.0     2056.0        NaN
+            N2 Nuclear U08      NaN   2315.0     2199.0        NaN
+            N2 Nuclear U09      NaN   2329.0     2245.0        NaN
+            N2 Solar (PV)     332.0    272.0      267.0      202.0
+            N2 Wind Onshore  1734.0   1724.0     1721.0     1013.0
+            N2_DSR            847.0    869.0      965.0     7988.0
+            N3 Solar (PV)    2813.0   2748.0     2658.0     1214.0
+            N3 Wind Onshore  3989.0   3954.0     3986.0     3005.0
+            N3_DSR            434.0    473.0      509.0     9698.0
+StorageUnit N1 BESS           410.0    441.0      835.0     9592.0
+            N1_iDSR          1672.0   1716.0     2176.0    14568.0
+            N2_iDSR          3555.0   3737.0     3890.0     2467.0
+            N3_Hydro         8942.0   8748.0     8653.0     5360.0
+            N3_iDSR           984.0   1468.0     1710.0     1568.0
+
+EVA verdict at +/-70 kEUR/MW
+                                    teaser        uc10_lp      uc10_milp      meth_milp
+component   name                                                                       
+Generator   N1 Gas           non-viable(-)            n/a            n/a  non-viable(-)
+            N1 Gas U00                 n/a      viable(+)      viable(+)            n/a
+            N1 Gas U01                 n/a  non-viable(-)  non-viable(-)            n/a
+            N1 Gas U02                 n/a  non-viable(-)  non-viable(-)            n/a
+            N1 Gas U03                 n/a  non-viable(-)  non-viable(-)            n/a
+            N1 Gas U04                 n/a  non-viable(-)  non-viable(-)            n/a
+            N1 Gas U05                 n/a  non-viable(-)  non-viable(-)            n/a
+            N1 Gas U06                 n/a  non-viable(-)  non-viable(-)            n/a
+            N1 Gas U07                 n/a  non-viable(-)  non-viable(-)            n/a
+            N1 Gas U08                 n/a  non-viable(-)  non-viable(-)            n/a
+            N1 Gas U09                 n/a  non-viable(-)  non-viable(-)            n/a
+            N1 Solar (PV)        viable(+)      viable(+)      viable(+)      viable(+)
+            N1 Wind Onshore      viable(+)      viable(+)      viable(+)      viable(+)
+            N1_DSR               viable(+)      viable(+)      viable(+)      viable(+)
+            N2 Nuclear           viable(+)            n/a            n/a      viable(+)
+            N2 Nuclear U00             n/a      viable(+)      viable(+)            n/a
+            N2 Nuclear U01             n/a      viable(+)      viable(+)            n/a
+            N2 Nuclear U02             n/a      viable(+)      viable(+)            n/a
+            N2 Nuclear U03             n/a      viable(+)      viable(+)            n/a
+            N2 Nuclear U04             n/a      viable(+)      viable(+)            n/a
+            N2 Nuclear U05             n/a      viable(+)      viable(+)            n/a
+            N2 Nuclear U06             n/a      viable(+)      viable(+)            n/a
+            N2 Nuclear U07             n/a      viable(+)      viable(+)            n/a
+            N2 Nuclear U08             n/a      viable(+)      viable(+)            n/a
+            N2 Nuclear U09             n/a      viable(+)      viable(+)            n/a
+            N2 Solar (PV)        viable(+)      viable(+)      viable(+)      viable(+)
+            N2 Wind Onshore      viable(+)      viable(+)      viable(+)      viable(+)
+            N2_DSR               viable(+)      viable(+)      viable(+)      viable(+)
+            N3 Solar (PV)        viable(+)      viable(+)      viable(+)      viable(+)
+            N3 Wind Onshore      viable(+)      viable(+)      viable(+)      viable(+)
+            N3_DSR               viable(+)      viable(+)      viable(+)      viable(+)
+StorageUnit N1 BESS              viable(+)      viable(+)      viable(+)      viable(+)
+            N1_iDSR              viable(+)      viable(+)      viable(+)      viable(+)
+            N2_iDSR              viable(+)      viable(+)      viable(+)      viable(+)
+            N3_Hydro             viable(+)      viable(+)      viable(+)      viable(+)
+            N3_iDSR              viable(+)      viable(+)      viable(+)      viable(+)
+
+Number of assets whose verdict differs from teaser : {'teaser': 0, 'uc10_lp': 22, 'uc10_milp': 22, 'meth_milp': 0}
+
+Annual revenue stack (MEUR/yr) for selected assets
+                          DA energy MEUR  ID energy MEUR  reserves MEUR  opex MEUR  capex MEUR
+asset          run                                                                            
+N1 BESS        meth_milp             9.7             6.1           66.7        0.0         8.0
+               teaser                2.4             4.9            3.9        0.0         8.0
+               uc10_lp               4.1             4.2            3.1        0.0         8.0
+               uc10_milp             3.5             4.5            6.5        0.0         8.0
+N1 Gas         meth_milp          2444.9          -825.9            0.1     5852.2       900.0
+               teaser             4348.3          1252.2            1.9     5464.2       900.0
+N1 Gas U00     uc10_lp            2426.6          -967.0            0.4     1347.8        90.0
+               uc10_milp          2347.5          -543.8            0.2     1689.9        90.0
+N1 Gas U01     uc10_lp             869.8           108.6            0.5      948.9        90.0
+               uc10_milp           934.5            58.8            1.2      952.0        90.0
+N1 Gas U02     uc10_lp             428.6           420.3            1.0      830.8        90.0
+               uc10_milp           477.7           333.0            0.7      789.9        90.0
+N1 Gas U03     uc10_lp             287.2           339.1            0.7      613.9        90.0
+               uc10_milp           298.5           291.6            0.7      573.4        90.0
+N1 Gas U04     uc10_lp             185.8           390.7            0.5      567.5        90.0
+               uc10_milp           186.5           294.9            1.0      473.1        90.0
+N1 Gas U05     uc10_lp             113.3           264.2            0.7      375.6        90.0
+               uc10_milp           112.2           286.1            0.3      400.9        90.0
+N1 Gas U06     uc10_lp              55.7           274.1            0.3      329.6        90.0
+               uc10_milp            60.0           146.1            0.6      210.5        90.0
+N1 Gas U07     uc10_lp              16.2           181.5            0.4      198.5        90.0
+               uc10_milp            10.2           215.0            0.0      230.9        90.0
+N1 Gas U08     uc10_lp               8.4           148.2            0.1      155.1        90.0
+               uc10_milp             6.2            86.7            0.0       95.6        90.0
+N1 Gas U09     uc10_lp               2.6           139.2            0.1      140.2        90.0
+               uc10_milp             5.1           121.1            0.0      124.8        90.0
+N1_iDSR        meth_milp           248.3            36.1          322.1        0.0         0.0
+               teaser               31.3            22.7           15.7        0.0         0.0
+               uc10_lp              37.9            18.1           15.4        0.0         0.0
+               uc10_milp            45.2            19.8           25.6        0.0         0.0
+N2 Nuclear     meth_milp          8777.3           295.7            5.7     1077.4      7500.0
+               teaser            12195.7          -599.4            9.3     1079.6      7500.0
+N2 Nuclear U00 uc10_lp            1213.1           -72.7            0.0      113.6       750.0
+               uc10_milp          1199.3           -71.2            0.0      113.5       750.0
+N2 Nuclear U01 uc10_lp            1212.1           -56.6            0.0      114.8       750.0
+               uc10_milp          1198.3           -55.8            0.0      114.7       750.0
+N2 Nuclear U02 uc10_lp            1211.1           -70.7            0.0      112.5       750.0
+               uc10_milp          1197.2           -68.3            0.0      112.5       750.0
+N2 Nuclear U03 uc10_lp            1209.8           -47.3            0.0      113.2       750.0
+               uc10_milp          1196.0           -46.2            0.0      113.2       750.0
+N2 Nuclear U04 uc10_lp            1208.5           -67.5            0.0      109.1       750.0
+               uc10_milp          1194.6           -65.1            0.0      109.0       750.0
+N2 Nuclear U05 uc10_lp            1207.1           -45.6            0.0      110.7       750.0
+               uc10_milp          1193.3           -44.7            0.0      110.8       750.0
+N2 Nuclear U06 uc10_lp            1204.8           -72.7            0.1      105.6       750.0
+               uc10_milp          1190.7           -71.2            0.1      105.4       750.0
+N2 Nuclear U07 uc10_lp            1202.2           -66.1            0.1      104.6       750.0
+               uc10_milp          1187.8           -65.2            0.1      105.3       750.0
+N2 Nuclear U08 uc10_lp            1197.9           -46.4            1.0      101.3       750.0
+               uc10_milp          1183.4           -46.0            1.0      102.2       750.0
+N2 Nuclear U09 uc10_lp            1183.2           -44.4           11.4       97.3       750.0
+               uc10_milp          1168.4           -39.5           11.3       98.3       750.0
+N2_iDSR        meth_milp            42.3            17.6           42.8        0.0         0.0
+               teaser               54.1            29.6           64.3        0.0         0.0
+               uc10_lp              62.6            24.8           68.2        0.0         0.0
+               uc10_milp            63.3            25.5           73.2        0.0         0.0
+N3_Hydro       meth_milp          8942.9          -755.7            5.8        0.0         0.0
+               teaser            13668.8            -6.2            4.2        0.0         0.0
+               uc10_lp           13372.1            -4.0            3.4        0.0         0.0
+               uc10_milp         13208.1            14.4            2.3        0.0         0.0
+N3_iDSR        meth_milp            27.9             6.2           31.1        0.0         0.0
+               teaser               17.9             8.0           15.0        0.0         0.0
+               uc10_lp              24.9             8.9           27.2        0.0         0.0
+               uc10_milp            27.1            10.0           34.1        0.0         0.0

@@ -1,0 +1,5 @@
+Error in rule run_day_ahead_centroid:
+Error in rule run_day_ahead_centroid:
+Error in rule run_day_ahead_centroid:
+    raise KeyError(f"None of [{key}] are in the [{axis_name}]")
+KeyError: "None of [Index(['N1 Gas', 'N2 Nuclear'], dtype='object', name='Generator')] are in the [index]"
