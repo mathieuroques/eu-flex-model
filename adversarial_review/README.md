@@ -8,8 +8,9 @@ Revue adversariale indépendante de la version préliminaire 1.0.0-rc2 du modèl
 | 2. Rapport d'adversarial review, findings hiérarchisés (§2-3) | [`02_rapport_adversarial_review.md`](02_rapport_adversarial_review.md) |
 | 3. Verdict sur l'adéquation à l'objectif | même rapport, §5 |
 | 4. Limites structurelles et améliorations indispensables | même rapport, §6 |
-| 5. État de l'art méthodologique (référentiel Q1-Q12, sources) | [`03_etat_de_l_art_methodologique.md`](03_etat_de_l_art_methodologique.md) |
+| 5. Notes de recherche sur l'état de l'art (grille Q1-Q12, sources ; remplacé comme étalon par le n° 7) | [`03_etat_de_l_art_methodologique.md`](03_etat_de_l_art_methodologique.md) |
 | 6. **Revue adversariale de la méthode** contre l'état de l'art, expériences de robustesse, verdict méthodologique, méthode cible | [`04_revue_adversariale_methode.md`](04_revue_adversariale_methode.md) |
+| 7. **Référentiel d'état de l'art autonome** (14 briques ; état de l'art établi ou construit lorsqu'il n'existe pas ; l'ERAA y est un plancher réglementaire) — **étalon de la revue méthodologique** | [`05_referentiel_etat_de_l_art.md`](05_referentiel_etat_de_l_art.md) |
 
 ## Preuves reproductibles
 

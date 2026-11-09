@@ -2,7 +2,7 @@
 
 *Question posée : la méthode, dans son ensemble et dans son détail, est-elle compatible avec l'objectif attendu, au regard de ce qui se fait de mieux dans l'industrie et la recherche ? Critère unique : qualité et robustesse du résultat. Le coût de calcul n'est pas un argument recevable.*
 
-*Référentiel : [`03_etat_de_l_art_methodologique.md`](03_etat_de_l_art_methodologique.md) (grille Q1-Q12). Audit logiciel préalable : [`02_rapport_adversarial_review.md`](02_rapport_adversarial_review.md) (défauts F-xx). Ici, on attaque les **choix de méthode**, à supposer le code correct.*
+*Étalon : référentiel autonome [`05_referentiel_etat_de_l_art.md`](05_referentiel_etat_de_l_art.md) (briques B1-B14, état de l'art établi ou construit ; l'ERAA n'y est qu'un plancher réglementaire). Notes de recherche : [`03_etat_de_l_art_methodologique.md`](03_etat_de_l_art_methodologique.md). Audit logiciel préalable : [`02_rapport_adversarial_review.md`](02_rapport_adversarial_review.md) (défauts F-xx). Ici, on attaque les **choix de méthode**, à supposer le code correct.*
 
 ---
 
@@ -10,7 +10,7 @@
 
 **L'architecture générale est défendable, mais la méthode telle que spécifiée ne l'est pas.** L'architecture enchaîne une simulation de marché séquentielle day-ahead puis infrajournalière, une EVA, puis un post-traitement d'indicateurs. C'est la voie 7(3)(b) de la FNAM et la famille de méthodes de l'ERAA et d'Elia. En revanche, la méthode ne produit pas des besoins de flexibilité **robustes** au sens de l'état de l'art. Les trois grandeurs qui déterminent les besoins « non couverts » — le **niveau d'adéquation** du parc, la **structure d'information** entre day-ahead et temps réel, et la **distribution des erreurs de prévision** — y sont fixées par convention plutôt que calibrées ou propagées comme des incertitudes. Nos expériences montrent que ces conventions déplacent les résultats d'un ordre de grandeur supérieur aux écarts que l'outil prétend mesurer (§4). Sur le même système physique, l'ENS varie d'un **facteur 30** selon la représentation de l'engagement des unités, le niveau d'adéquation d'un **facteur 2 à 3** selon le prix de rareté supposé, le P99,9 d'un **facteur 2,3** selon le modèle d'erreur, et les déficits de court terme d'un facteur supérieur à **1 000** entre les deux méthodes proposées. Les « besoins » FNAM 8(5), eux, restent strictement inchangés dans toutes ces variantes.
 
-**Positionnement (vérifié sur les textes intégraux de la méthodologie ERAA 2026 et des décisions ACER)** : comparé au standard industriel européen d'adéquation (ERAA), EU-Flex est **en avance** sur la structure d'information (DA/ID avec erreurs et pannes, contre la prévision parfaite de l'ERAA) et sur la cohérence EVA/dispatch. Il est **conforme** sur le pas horaire et l'hydraulique. Il est **en retrait** sur la convergence Monte-Carlo et le traitement des pics de prix dans l'EVA. Les écarts majeurs se situent entre ce niveau ERAA et ce qu'exige **l'objet propre de la FNAM** (déficits de flexibilité probabilisés, 15 min, erreurs historiques, stockage avec pertes), tel que le pratiquent Elia et la recherche.
+**Positionnement** : l'étalon est le référentiel autonome [`05_referentiel_etat_de_l_art.md`](05_referentiel_etat_de_l_art.md), qui établit ou construit brique par brique l'état de l'art d'après les pratiques des opérateurs les plus avancés (CAISO, EirGrid, Elia, RTE, AEMO, NESO, gestionnaires hydrauliques nordiques), des éditeurs (PLEXOS, SINTEF, GenX) et de la recherche. **L'ERAA n'y est qu'un plancher réglementaire** : prévision parfaite et pas horaire y sont admis. EU-Flex dépasse ce plancher sur la structure DA/ID et sur la cohérence EVA/dispatch, mais **reste en deçà de l'état de l'art sur 13 des 14 briques** (§5).
 
 | Bloc de résultats | Robustesse méthodologique |
 |---|---|
@@ -88,14 +88,14 @@ Chaque composant suit la même structure : ce que fait EU-Flex, ce que fait l'é
 ### M4 — Structure d'information DA → ID → temps réel (Q4) · **Majeure (biais établi par construction, ampleur non quantifiée)**
 
 - **EU-Flex** : le DA optimise sur 72 h de **prévisions** connues d'avance. L'ID ré-optimise sur 72 h de **réalisations** connues d'avance : toute l'erreur des 72 prochaines heures est révélée d'un coup. Le blocage dynamique de la FRR est calculé à partir de **l'erreur réalisée** (spécification éq. 9.7-9.8). Le stockage infrajournalier peut se pré-positionner des heures avant un écart qui, dans la réalité, n'est connu que progressivement.
-- **État de l'art** : **niveau industriel (ERAA)** : le dispatch repose sur le principe de **« perfect foresight »**, avec erreurs de prévision et pannes fortuites ignorées, sauf si le cadre de modélisation permet de caractériser correctement les déséquilibres imprévus (méthodologie 2026, art. 4(1)(g), texte vérifié). **Sur ce point, EU-Flex dépasse le standard industriel** : un DA sur prévisions, un ID sur réalisations, des pannes en ID. **Niveau recherche** : révélation séquentielle (prévisions glissantes, plusieurs points de décision ID, équilibrage en temps réel ; planification glissante stochastique de type WILMAR) ; réserves dimensionnées *ex ante* sur la distribution de l'erreur.
+- **État de l'art (référentiel 05, B5, consensus établi en recherche, émergent dans l'industrie)** : CAISO enchaîne DA, RUC, marché à 15 min et dispatch à 5 min, avec un produit de rampe flexible couvrant l'incertitude résiduelle ; WILMAR (étude All-Island) et PLEXOS pratiquent la planification glissante stochastique et l'optimisation multi-étapes. Concrètement : révélation séquentielle (prévisions glissantes, plusieurs points de décision ID, équilibrage en temps réel) et réserves dimensionnées *ex ante* sur la distribution de l'erreur. *Plancher réglementaire* : l'ERAA admet la prévision parfaite (art. 4(1)(g)). EU-Flex le dépasse, mais **ce plancher n'est pas un étalon**. Détail : révélation séquentielle (prévisions glissantes, plusieurs points de décision ID, équilibrage en temps réel ; planification glissante stochastique de type WILMAR) ; réserves dimensionnées *ex ante* sur la distribution de l'erreur.
 - **Attaque** : la grandeur que la FNAM veut mesurer — la capacité du système à absorber l'**imprévu** — est simulée avec un oracle. Tout déficit de court terme mesuré par différence ID − DA est donc une **borne basse** : l'ID « voit venir » les écarts. Expérience E-H (§4) : réduire l'horizon à 36 h avec 12 h de recouvrement ne change presque pas les déficits (+0,3 %), mais augmente les démarrages de 25 à 38 %. Ce test ne lève pas l'oracle (36 h de réalisations restent connues), et l'outil ne permet pas de révélation horaire. **L'ampleur du biais reste à mesurer** ; c'est une priorité de validation.
 - **Remède** : ID en fenêtres courtes successives (par ex. horizon de 1 à 4 h, mises à jour horaires), prévisions intermédiaires (J-1 → H-6 → H-1), réserves dimensionnées *ex ante* (SO GL 157 ou dimensionnement dynamique), activation des réserves en temps réel contre l'erreur résiduelle.
 
-### M5 — Résolution temporelle (Q5) · **Majeure pour le court terme** (conforme au standard ERAA d'adéquation)
+### M5 — Résolution temporelle (Q5 / B6) · **Majeure** (au-dessus du plancher ERAA, en deçà de l'état de l'art établi)
 
 - **EU-Flex** : pas horaire. Le marché et l'équilibrage infrajournaliers sont fusionnés.
-- **État de l'art et réglementation** : **l'ERAA admet un MTU ≤ 1 h** (méthodologie 2026, art. 4(1)(h), texte vérifié) : le pas horaire est conforme au standard industriel d'adéquation. En revanche, le SDAC est au pas de 15 minutes depuis le 1er octobre 2025, le SIDC et l'équilibrage aussi, et la FNAM 10(1)(e) distingue very fast (5-15 min), fast (15-60 min) et slow. Elia distingue « fast », « slow » et « ramping » (≤ 5 min ; source secondaire). L'objet « besoins de flexibilité de court terme » est donc plus exigeant que l'objet « adéquation ».
+- **État de l'art (référentiel 05, B6, consensus établi)** : 15 min dans toutes les étapes de marché, 5 min pour l'équilibrage (CAISO à 5 min en temps réel ; Deane et al. 2014 : l'heure manque le cyclage et les rampes, et sous-évalue les batteries). *Plancher réglementaire* : l'ERAA admet un MTU ≤ 1 h, ce qui n'est pas un étalon. Par ailleurs, le SDAC est au pas de 15 minutes depuis le 1er octobre 2025, le SIDC et l'équilibrage aussi, et la FNAM 10(1)(e) distingue very fast (5-15 min), fast (15-60 min) et slow. Elia distingue « fast », « slow » et « ramping » (≤ 5 min ; source secondaire). L'objet « besoins de flexibilité de court terme » est donc plus exigeant que l'objet « adéquation ».
 - **Conséquence** : rampes intrahoraires, besoins « fast / very fast » et valeur des actifs rapides (batteries, DSR) structurellement invisibles. La rampe maximale horaire sous-estime la rampe au MTU. Les revenus des actifs rapides, donc l'EVA, sont biaisés contre eux.
 - **Remède** : résolution 15 min au moins pour l'ID et l'équilibrage, éventuellement sur des fenêtres échantillonnées ; à défaut, une couche statistique intrahoraire calibrée.
 
@@ -106,10 +106,10 @@ Chaque composant suit la même structure : ce que fait EU-Flex, ce que fait l'é
 - **Attaque** : (i) le manuel présente l'option MILP comme la référence de fidélité (« Relax the binary on/off decisions… at some loss of fidelity »). Sur des flottes agrégées, c'est l'inverse : le binaire impose du tout ou rien sur 30 GW avec un minimum technique de 12 GW. **Preuve E-U (§4)** : flotte gaz allumée 34,7 % des heures avec 102 démarrages complets ; **ENS × 30** (5,9 → 175,7 GWh) ; heures de rareté DA 8 → 301 ; prix moyens DA −27 à −40 % et ID +38 à +44 % (N2, N3) ; coût variable +14 %. Le résultat dépend donc d'un ordre de grandeur de la représentation de l'UC, sans référence (clustered UC entier) pour trancher. (ii) Les prix d'IPM sans crossover sur un LP dégénéré (beaucoup de tarifs à 150 €/MWh) sont le centre analytique de la face duale : les rentes inframarginales, donc la VAN, dépendent du choix d'algorithme.
 - **Remède** : UC regroupé à entier borné par `n_units` (ou relaxation de cet entier avec resserrement), crossover activé pour les prix, règle de prix documentée, étalonnage sur un sous-échantillon contre un UC unitaire.
 
-### M7 — Valorisation du stockage hydraulique et saisonnier (Q7) · **Modérée** (conforme au standard ERAA, en deçà de la recherche)
+### M7 — Valorisation du stockage hydraulique et saisonnier (Q7 / B8) · **Majeure** (au niveau du plancher ERAA, en deçà de l'état de l'art établi)
 
 - **EU-Flex** : pré-optimisation annuelle en **prévision parfaite** (apports, EnR, demande de l'année climatique), puis contraintes de **SOC minimal** en fin de fenêtre avec écart pénalisé. Aucune valeur de l'eau n'entre dans les offres : l'eau au-dessus de la cible est valorisée à 0, celle en dessous à la pénalité.
-- **État de l'art** : **niveau industriel (ERAA)** : une pré-optimisation *ex ante* à pas grossier avec trajectoires min/max est explicitement admise (méthodologie 2026, art. 4(5)(a)). **L'approche d'EU-Flex y est conforme.** **Niveau recherche** : valeurs de l'eau sous incertitude (SDP/SDDP ; Antares avec valeurs de l'eau externes ; EMPS/ProdRisk). La valeur de l'eau est un coût d'opportunité qui forme les prix.
+- **État de l'art (référentiel 05, B8, consensus établi pour l'hydraulique)** : valeurs de l'eau calculées par SDDP sous incertitude (ProdRisk en usage opérationnel chez de grands producteurs nordiques ; PLEXOS avec surface de valeurs de l'eau par coupes de Benders) et injectées comme coût d'opportunité qui forme les prix. *Plancher réglementaire* : l'ERAA admet une pré-optimisation *ex ante* à pas grossier, ce qui n'est pas un étalon.
 - **Attaque** : (i) la prévision parfaite annuelle donne une **borne optimiste** de la flexibilité hydraulique : le réservoir « sait » quand viendra la Dunkelflaute. (ii) Les prix des zones hydrauliques ne reflètent pas le coût d'opportunité, ce qui biaise les revenus du stockage concurrent et des pointes, donc l'EVA. (iii) La suite d'intégration du modèle constate un écart de SOC de −10,5 % par rapport au plan en ID (F-13) : les cibles ne tiennent pas sous erreur de prévision, ce qui est attendu mais montre que le plan déterministe n'est pas une politique robuste.
 - **Remède** : valeurs de l'eau calculées sous incertitude climatique (multi-CY) et intégrées comme coût marginal dans le DA et l'ID ; à défaut, des courbes guides avec bandes, et une analyse de sensibilité à la prévision.
 
@@ -127,7 +127,7 @@ Chaque composant suit la même structure : ce que fait EU-Flex, ce que fait l'é
 - **Preuve (M-B)** : pour la pointe gaz du teaser (capex annualisé 30 k€/MW/an, coût marginal 150 €/MWh, 8 %, 2030-2050), « converger » signifie être entre **5,4 et 8,4 heures de rareté par an** (seuil 70 k€) si la rareté est payée 4 500 €/MWh. Mais **2,4 à 3,7 h** si elle est payée au plafond ID de 10 000 €/MWh. Le niveau d'adéquation du parc final, dont dépendent tous les ENS et besoins non couverts calculés ensuite, varie d'un **facteur 2 à 3 selon une convention de prix**, et de ±25 % de plus selon le seuil. Ajoutons qu'un pas fixe de 800 MW peut osciller sans converger (F-11c).
 - **Circularité** : l'EVA construit de la flexibilité tant qu'elle est rentable. Les « besoins non couverts » mesurés ensuite sont donc la **flexibilité qu'il n'est pas rentable de fournir au prix de rareté supposé**. Ce n'est pas un besoin physique, c'est un artefact du design de marché modélisé. C'est légitime **seulement** si l'hypothèse de prix (VoLL, plafonds, HMMCP) est explicitement ancrée et testée en sensibilité.
 - **Remède** : formuler l'EVA comme un problème d'équilibre ou d'optimisation (capacité + dispatch) sur l'ensemble des CY, ou comme un pas adaptatif (bissection) avec des tolérances en heures de rareté ; ancrer le niveau d'adéquation au **standard de fiabilité** de chaque État membre ou publier les besoins en fonction de ce niveau ; sensibilités systématiques VoLL/plafond ; risque explicite (CVaR ou hurdle rates différenciés).
-- **Point positif à préserver** : l'EVA d'EU-Flex réutilise directement le dispatch et les années climatiques de la simulation de marché. Elle évite donc par construction l'incohérence EVA/dispatch (3 contre 36 scénarios) que l'ACER reproche à l'ERAA 2024. C'est un avantage réel sur le standard industriel, à condition de résoudre l'indétermination de l'équilibre.
+- **Point positif à préserver** : l'EVA d'EU-Flex réutilise directement le dispatch et les années climatiques de la simulation de marché. Elle évite donc par construction l'incohérence EVA/dispatch (3 contre 36 scénarios) que l'ACER reproche à l'ERAA 2024. C'est un avantage réel sur la pratique ERAA, mais pas encore l'état de l'art (`05`, B10 : équilibre stochastique avec risque, convergence garantie, adéquation ancrée ou balayée).
 
 ### M10 — Attribution des contributions (Q10) · **Critique**
 
@@ -207,31 +207,35 @@ Sorties : [`evidence/method_experiments_cheap.txt`](evidence/method_experiments_
 
 ---
 
-## 5. Matrice de conformité à l'état de l'art
+## 5. Matrice d'écarts contre le référentiel d'état de l'art (`05`)
 
-| Critère | EU-Flex | Contre l'industrie (ERAA) | Contre la recherche |
-|---|---|---|---|
-| Q1 Déficit probabilisé | Différences ID − DA signées ; méthode probabiliste aux marges incomplètes | ❌ | ❌ |
-| Q2 Climat : années, continuité, convergence | 1 année par simulation, réinitialisation annuelle, 1 tirage, pas de critère de convergence | ❌ (convergence MC exigée par l'ERAA) | ❌ (pas d'été à été, pas de chaînage) |
-| Q3 Erreurs de prévision | Bruit synthétique codé en dur, ou un CSV | ✅ au-delà de l'ERAA (qui les ignore) | ❌ (FNAM 10(1) non respectée ; pas de dépendance spatio-temporelle) |
-| Q4 Structure d'information | DA sur prévisions, puis ID sur réalisations avec oracle de 72 h | ✅ au-delà de l'ERAA (prévision parfaite) | ❌ |
-| Q5 Résolution | Horaire | ✅ (MTU ≤ 1 h admis) | ❌ (marché et FNAM au pas de 15 min) |
-| Q6 UC adapté à l'agrégation, prix explicites | LP relaxé (acceptable) ; option MILP invalide ; IPM sans crossover | ⚠️ | ⚠️ |
-| Q7 Hydraulique | Prévision parfaite + SOC minimal | ✅ (pré-optimisation *ex ante* admise) | ⚠️ (pas de valeurs de l'eau) |
-| Q8 EVA | Revenus et dispatch cohérents (+) ; pas fixe, bande large, pas d'atténuation des pics, adéquation fixée par convention de prix, pas de sensibilité de prix | ⚠️ (cohérence EVA/ED supérieure à l'ERAA ; atténuation des pics absente) | ❌ |
-| Q9 Stockage contrefactuel | Sans pertes, par année | ❌ (FNAM 8(10), 8(12)(a)) | ❌ |
-| Q10 Attribution | Par co-mouvement, non fermée | ❌ | ❌ |
-| Q11 Incertitude quantifiée | Aucune | ❌ (α(N) exigé par l'ERAA) | ❌ |
-| Q12 V&V publiés | Programmés dans la spécification, non publiés | ❌ | ❌ |
-| Descriptifs FNAM 8(5) | Exacts (vérifié), calendrier fragile | ✅ / ⚠️ | ✅ / ⚠️ |
-| Simulation de marché séquentielle DA/ID sur PyPSA | Fondation saine, déterministe, transparente | ✅ | ✅ |
+Légende : ✅ au niveau de l'état de l'art · ⚠️ partiel · ❌ en deçà. La colonne « plancher » indique seulement la position par rapport à l'ERAA ou à la FNAM, à titre d'information.
+
+| Brique (05) | État de l'art / idéal construit (résumé) | EU-Flex | vs plancher (ERAA/FNAM) | vs état de l'art | Preuve |
+|---|---|---|---|---|---|
+| B1 Métriques | 4 couches : variabilité / enveloppes multi-horizons / déficits probabilisés par cause / valeur ; zone, région, UE | L1 seule correcte (zonale) ; shortfalls signés ; probabiliste aux marges incomplètes ; ni L2 ni niveau UE | ❌ (FNAM 9(4), 10(4) ; art. 19e(7)(b)) | ❌ | M1, M12, F-09 ; ×1 000 entre méthodes |
+| B2 Climat | ≥ 100-200 années, climat de l'année cible, chaînées ou d'été à été, extrêmes et storylines, convergence | 1 année calendaire réinitialisée ; bissextiles non gérées | ⚠️ | ❌ | M2, F-05 ; Kittel |
+| B3 Prévisions | Conditionnelles, copules, EVT, projection à l'année cible, N réalisations, multi-horizons | Bruit AR(1) codé en dur, ou un CSV unique | ⚠️ (au-delà de l'ERAA, en deçà de la FNAM 10(1)) | ❌ | M3, F-08 ; ×2,3 ; IC ±7-20 % |
+| B4 Pannes | Markov par unité, convergence, séparées des erreurs | Tirage par flotte, 1 échantillon | ⚠️ (convergence ERAA absente) | ⚠️ | F-15 |
+| B5 Information | Guichets réels, mises à jour de prévision, réserves *ex ante* puis activées, déficits mesurés en temps réel | DA 72 h puis ID 72 h oracle ; FRR bloquée selon l'erreur réalisée | ✅ (au-delà de la prévision parfaite) | ❌ | M4 ; E-H (ampleur non quantifiée) |
+| B6 Résolution | 15 min marché, 5 min équilibrage | 60 min | ✅ (≤ 1 h admis) | ❌ | M5 |
+| B7 UC et prix | Clustered UC entier serré ; règle de prix et uplift ; duales sommet | LP sur flotte (acceptable, non validé) ; option MILP invalide ; IPM sans crossover | — | ⚠️ | M6 ; E-U ×30 sur l'ENS |
+| B8 Stockage et hydraulique | SDDP sous incertitude ; coûts d'opportunité dans les prix ; DSR contraint | Prévision parfaite annuelle + SOC minimal | ✅ (pré-optimisation admise) | ❌ | M7 ; F-13 (SOC −10,5 %) |
+| B9 Réseau | Flow-based par année cible ; mutualisation de l'équilibrage ; DSO | NTC par défaut ; FB non reproductible ; besoins réseau fictifs | ⚠️ | ⚠️ | M8 |
+| B10 Investissement | Équilibre stochastique avec risque, mêmes scénarios, adéquation ancrée ou balayée, convergence garantie | Revenus cohérents avec le dispatch (+) ; pas fixe ; pas de risque des pics ; adéquation fixée par convention ; aucune sensibilité de prix | ⚠️ (atténuation des pics absente ; art. 19e(2)(a) non couvert) | ❌ | M9, F-11 ; M-B ×2-3 |
+| B11 Stockage EnR | Classes neutres avec rendements, pluriannuel chaîné, cible moyenne, Pareto | Sans pertes, par année, coût arbitraire | ❌ (FNAM 8(10), 8(12)(a)) | ❌ | M11, F-06 |
+| B12 Attribution | Comptable fermée + marginale + Shapley | Co-mouvement non fermé ; EnR comptée deux fois | — | ❌ | M10, F-03 ; E-C |
+| B13 Incertitude | IC partout, EVT, convergence, Sobol | Aucune | ❌ (α(N) ERAA) | ❌ | M13 ; M-A |
+| B14 V&V | Rétro-simulation publiée, benchmark, tests de propriétés, CI, revue | Programmée, non publiée ; oracle livré en échec | — | ❌ | M13, F-13 |
+
+**Bilan** : sur 14 briques, EU-Flex n'atteint l'état de l'art sur **aucune**, est **partiel** sur 3 (B4, B7, B9) et **en deçà** sur 11. Il dépasse le plancher réglementaire ERAA sur 3 briques (B5, B6, B8). Ses atouts propres : un moteur de marché ouvert, sain et déterministe, la cohérence EVA/dispatch par construction (B10), et des indicateurs FNAM 8(5) exacts.
 
 ---
 
 ## 6. Verdict méthodologique
 
-0. **Positionnement vérifié sur textes intégraux** : par rapport au **standard industriel européen (ERAA)**, EU-Flex est **en avance** sur trois points : la structure DA/ID avec erreurs de prévision et pannes en ID, là où l'ERAA retient la prévision parfaite ; la cohérence EVA/dispatch, là où l'ERAA utilise 3 contre 36 scénarios ; la transparence du code. Il est **conforme** sur le pas horaire et la pré-optimisation hydraulique, et **en retrait** sur la convergence Monte-Carlo et l'atténuation des pics de prix dans l'EVA. Par rapport à **l'objet propre de la FNAM et à la recherche**, il reste en retrait sur les points détaillés ci-dessous. **Les critiques de cette revue portent donc principalement sur l'écart entre un outil d'adéquation de niveau ERAA amélioré et ce qu'exige une mesure robuste des besoins de flexibilité**, qui est un objet plus exigeant que l'adéquation.
-1. **L'architecture est compatible avec l'objectif** : simulation de marché séquentielle + EVA + post-traitement selon la FNAM, sur un outil ouvert. C'est la bonne famille, alignée sur l'ERAA et sur la voie 7(3)(b) de la FNAM, et son ouverture est un atout réel face aux outils propriétaires.
+0. **Positionnement** : contre le référentiel `05`, EU-Flex n'atteint l'état de l'art sur aucune des 14 briques (3 partielles, 11 en deçà). Le fait qu'il dépasse le plancher réglementaire ERAA sur la structure DA/ID, la résolution et l'hydraulique n'est **pas** un indicateur de qualité : l'ERAA est un cadre minimal pour l'adéquation, pas un étalon pour la mesure des besoins de flexibilité.
+1. **L'architecture est compatible avec l'objectif** : simulation de marché séquentielle + EVA + post-traitement selon la FNAM, sur un outil ouvert. C'est la famille de l'architecture idéale du référentiel (`05`, §4) ; son ouverture est un atout réel. Mais chaque brique doit être remontée au niveau défini en `05`.
 2. **La méthode spécifiée n'est pas compatible avec l'objectif de qualité et de robustesse** pour les résultats qui comptent (besoins non couverts, besoins de stockage, contributions). Trois causes de fond :
    - **(a) Conventions non ancrées ni validées** (M3, M6, M9) : erreurs de prévision synthétiques, représentation de l'engagement non étalonnée (×30 sur l'ENS selon l'option), niveau d'adéquation fixé par des prix de rareté arbitraires. Ce sont elles, et non la physique, qui pilotent les déficits.
    - **(b) Indicateurs mal construits** (M1, M10) : des besoins insensibles à l'offre, des déficits signés qui se compensent, des contributions qui ne mesurent ni une identité comptable ni une valeur. Il s'y ajoute un **oracle informationnel** en ID (M4), qui biaise le court terme à la baisse dans une mesure non quantifiée.
@@ -244,6 +248,8 @@ Sorties : [`evidence/method_experiments_cheap.txt`](evidence/method_experiments_
 ---
 
 ## 7. Méthode cible recommandée (qualité d'abord)
+
+*Déclinaison opérationnelle, pour EU-Flex, de l'architecture idéale du référentiel `05` (§4) ; chaque ligne renvoie à une brique B1-B14.*
 
 | # | Brique | Spécification cible | Remplace |
 |---|---|---|---|

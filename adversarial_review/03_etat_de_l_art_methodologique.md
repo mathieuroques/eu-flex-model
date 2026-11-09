@@ -1,5 +1,7 @@
 # État de l'art méthodologique — référentiel de comparaison pour EU-Flex
 
+> **Note (mise à jour)** : ce document rassemble les notes de recherche. **L'étalon de comparaison est désormais le référentiel autonome [`05_referentiel_etat_de_l_art.md`](05_referentiel_etat_de_l_art.md)**, qui définit l'état de l'art brique par brique et construit l'idéal là où il n'existe pas. L'ERAA y est traité comme un **plancher réglementaire**, jamais comme l'état de l'art industriel.
+
 *Complément au dossier de contexte (phase 1). Il sert de référentiel à la revue adversariale de la méthode (`04_revue_adversariale_methode.md`). Fiabilité : [FAIT] = source consultée ; [LIT] = résultat publié rapporté d'après son résumé ou ses supports ; [PRATIQUE] = pratique industrielle documentée ; [HYP] = appréciation de l'équipe.*
 
 Le critère de comparaison est **la qualité et la robustesse du résultat**, pas le coût de calcul.
@@ -38,7 +40,7 @@ Le critère de comparaison est **la qualité et la robustesse du résultat**, pa
 
 ### 2.3 Résolution temporelle et structure d'information
 
-- **Standard ERAA** [FAIT, méthodologie 2026, art. 4(1)(g)-(h)] : « the MTU shall be smaller than or equal to an hour ». « Unless the modelling framework allows for a proper characterisation of unforeseen imbalances, the ED shall rely on a "perfect foresight" principle » : erreurs de prévision **et pannes fortuites ignorées**. → **La référence industrielle européenne est en deçà d'EU-Flex** sur la structure d'information ; la recherche (planification glissante stochastique) est au-delà.
+- **Standard ERAA** [FAIT, méthodologie 2026, art. 4(1)(g)-(h)] : « the MTU shall be smaller than or equal to an hour ». « Unless the modelling framework allows for a proper characterisation of unforeseen imbalances, the ED shall rely on a "perfect foresight" principle » : erreurs de prévision **et pannes fortuites ignorées**. → **Le plancher réglementaire ERAA est en deçà d'EU-Flex** sur la structure d'information. Ce n'est **pas** l'état de l'art : celui-ci (CAISO 15/5 min avec produit de rampe flexible, WILMAR, PLEXOS multi-étapes) est défini dans le référentiel `05`, brique B5.
 
 - **SDAC** est passé au **pas de 15 minutes** (MTU 15 min) le 30 septembre 2025, pour livraison le 1er octobre 2025, dans toutes les zones [FAIT, NEMO Committee, EPEX, Nord Pool]. SIDC et l'équilibrage sont aussi au pas de 15 minutes.
 - La FNAM raisonne « par MTU » et distingue la flexibilité « very fast / fast / slow » (5-15 min, 15-60 min, 1 h-J-1) [FAIT].
@@ -73,7 +75,7 @@ Le critère de comparaison est **la qualité et la robustesse du résultat**, pa
 
 ## 3. Grille d'évaluation dérivée (utilisée dans la revue)
 
-| Code | Critère de qualité | Niveau industriel de référence (ERAA, texte vérifié) | Niveau recherche / meilleure pratique |
+| Code | Critère de qualité | Plancher réglementaire (ERAA, texte vérifié) — **pas l'état de l'art** | Meilleures pratiques (détail et brique idéale : référentiel `05`) |
 |---|---|---|---|
 | Q1 | L'indicateur mesure un **déficit** probabilisé | ENS/LOLE probabilistes (adéquation) ; la FNAM 9(4) et 10(4) transpose la logique à la flexibilité | IRRE (Lannoye) ; convolution (Elia, source secondaire) |
 | Q2 | Incertitude climatique | ≤ 30 années récentes, années pondérées ou projections ; MC avec convergence α(N) publiée | 35-62 années, **été à été** (Kittel), événements composés (Gøtske) |
