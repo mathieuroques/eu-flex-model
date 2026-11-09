@@ -8,6 +8,8 @@ Revue adversariale indépendante de la version préliminaire 1.0.0-rc2 du modèl
 | 2. Rapport d'adversarial review, findings hiérarchisés (§2-3) | [`02_rapport_adversarial_review.md`](02_rapport_adversarial_review.md) |
 | 3. Verdict sur l'adéquation à l'objectif | même rapport, §5 |
 | 4. Limites structurelles et améliorations indispensables | même rapport, §6 |
+| 5. État de l'art méthodologique (référentiel Q1-Q12, sources) | [`03_etat_de_l_art_methodologique.md`](03_etat_de_l_art_methodologique.md) |
+| 6. **Revue adversariale de la méthode** contre l'état de l'art, expériences de robustesse, verdict méthodologique, méthode cible | [`04_revue_adversariale_methode.md`](04_revue_adversariale_methode.md) |
 
 ## Preuves reproductibles
 
@@ -17,6 +19,9 @@ Revue adversariale indépendante de la version préliminaire 1.0.0-rc2 du modèl
 | `scripts/independent_recompute.py` | Recalcul indépendant des indicateurs FNAM 8(5) et 10(1) depuis les CSV bruts, comparé à `model_outputs.nc` |
 | `scripts/make_adversarial_inputs.py` | Génère les jeux d'entrée corrompus (M1-M6) et bissextiles |
 | `scripts/analyse_short_term.py` | Expériences sur le bruit synthétique (F-08) et sur la méthode probabiliste (F-09) |
+| `scripts/method_experiments.py` | Expériences analytiques de méthode : bootstrap du P99,9, bande d'équilibre EVA, mutualisation régionale |
+| `scripts/compare_runs.py` | Comparaison d'un run variante avec la référence (une convention modifiée à la fois : UC binaire, horizon, contrefactuel iDSR) |
+| `configs/meth_*.yaml` | Configurations des variantes E-U (UC binaire), E-H (horizon 36/12), E-C (sans iDSR) : `snakemake -c1 --configfile adversarial_review/configs/meth_milp.yaml --directory runs/meth_milp` |
 | `evidence/` | Sorties brutes : pytest, rapport de la suite d'intégration du modèle, recalcul indépendant, expériences de court terme, runs complémentaires |
 
 Commandes de reproduction : rapport, §1.3. Les répertoires `runs/` produits par les exécutions ne sont pas versionnés (ils sont dans `.gitignore`).

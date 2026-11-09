@@ -1,0 +1,23 @@
+=== M-A  Bootstrap (365 daily blocks, 2000 resamples) of short-term percentiles
+P99.9: N1: 11,665 MW [90% CI 10,704 .. 12,246] (+/-7%), N2: 6,183 MW [90% CI 5,512 .. 7,588] (+/-17%), N3: 1,814 MW [90% CI 1,668 .. 2,052] (+/-11%)
+P99: N1: 8,625 MW [90% CI 8,022 .. 9,093] (+/-6%), N2: 4,241 MW [90% CI 3,937 .. 4,482] (+/-6%), N3: 1,378 MW [90% CI 1,293 .. 1,471] (+/-6%)
+P0.1: N1: -12,523 MW [90% CI -13,110 .. -11,476] (+/-7%), N2: -7,661 MW [90% CI -9,294 .. -6,180] (+/-20%), N3: -1,770 MW [90% CI -1,925 .. -1,566] (+/-10%)
+P1: N1: -9,875 MW [90% CI -10,185 .. -9,438] (+/-4%), N2: -4,217 MW [90% CI -4,776 .. -3,704] (+/-13%), N3: -1,214 MW [90% CI -1,288 .. -1,149] (+/-6%)
+Values beyond P99.9 in one climate year: ~9 hours
+
+=== M-B  EVA equilibrium band implied by the NPV threshold (teaser N1 Gas)
+threshold 70,000 EUR/MW, scarcity price   4500 (teaser shedding bid): 'converged' for  5.4 ..  8.4 scarcity hours/yr (ratio 1.55)
+threshold 20,000 EUR/MW, scarcity price   4500 (teaser shedding bid): 'converged' for  6.5 ..  7.3 scarcity hours/yr (ratio 1.13)
+threshold 70,000 EUR/MW, scarcity price   5000 (DA cap): 'converged' for  4.9 ..  7.5 scarcity hours/yr (ratio 1.55)
+threshold 20,000 EUR/MW, scarcity price   5000 (DA cap): 'converged' for  5.8 ..  6.6 scarcity hours/yr (ratio 1.13)
+threshold 70,000 EUR/MW, scarcity price  10000 (ID cap): 'converged' for  2.4 ..  3.7 scarcity hours/yr (ratio 1.55)
+threshold 20,000 EUR/MW, scarcity price  10000 (ID cap): 'converged' for  2.9 ..  3.2 scarcity hours/yr (ratio 1.13)
+(annuity factor 10.82 over 2030-2050 at 8%; capex 30,000 EUR/MW/yr; peaker earns only in scarcity hours, inframarginal rents ignored)
+
+=== M-C  Diversification: sum of zonal needs vs. need of the aggregated region
+                       sum of zones (TWh)  region (TWh)  region / sum
+FNAM 8(5)(a) hourly                78.530        60.264         0.767
+FNAM 8(5)(b) daily                 56.591        46.400         0.820
+FNAM 8(5)(c) seasonal              55.174        38.652         0.701
+P99.9 short-term: sum of zones 19,662 MW, region 14,485 MW (ratio 0.74)
+max |ramp|: sum of zones 24,103 MW, region 14,693 MW
