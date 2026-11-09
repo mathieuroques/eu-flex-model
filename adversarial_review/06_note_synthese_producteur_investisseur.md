@@ -22,12 +22,12 @@ L'architecture est saine : un outil ouvert, une simulation de marché day-ahead 
 | Convention modifiée, à système physique identique | Effet mesuré |
 |---|---|
 | Représentation de l'engagement des unités (relaxée ou binaire) | ENS **×30** ; VAN/MW batterie **×23** (revenus de réserve ×17) ; nucléaire **−83 %** ; gaz ×6,7 (en négatif) |
-| Flottes découpées en 10 unités (référence plus fidèle) | [à compléter] |
+| Flottes découpées en 10 unités (référence plus fidèle) | LP : inchangé (±1 %) ; engagement entier : [en cours] |
 | Prix de rareté qui fixe l'équilibre EVA (4 500 ou 10 000 €/MWh) | Niveau d'adéquation « convergé » : **5,4-8,4 h** contre **2,4-3,7 h** de rareté par an |
 | Source des erreurs de prévision (bruit synthétique par défaut ou prévisions fournies) | Besoin de court terme P99,9 **×2,3** |
 | Méthode de court terme (« simulation » ou « probabiliste ») | Écart de plus de **×1 000** |
 | Prévision intraday (72 h, 24 h ou 8 h de réalisations connues d'avance) | [à compléter] |
-| Stockage fictif avec ou sans pertes réalistes | [à compléter] |
+| Stockage fictif avec ou sans pertes réalistes | Avec pertes, le besoin calculé **baisse** (4 h, cible 2 % : 97,5 → 22,4 GW) : l'énergie dissipée compte comme EnR « intégrée ». **La métrique récompense le gaspillage** |
 | Toutes les conventions ci-dessus | Besoins « descriptifs » (art. 8(5)) **inchangés** : ils ne mesurent pas une insuffisance |
 
 **Le sens de l'erreur nette est inconnu** : certaines conventions gonflent les besoins non couverts (méthode probabiliste qui ignore stockage, EnR et interconnexions ; revenus incomplets des actifs flexibles), d'autres les réduisent (prévision parfaite en intraday, pas horaire, stockage sans pertes, années climatiques isolées et coupées au 31 décembre, hydraulique en prévision parfaite).
@@ -37,8 +37,9 @@ L'architecture est saine : un outil ouvert, une simulation de marché day-ahead 
 1. **EVA et revenus.** Le revenu modélisé couvre l'énergie day-ahead, l'écart intraday et la capacité de réserve. En sont absents l'énergie d'équilibrage, les mécanismes de capacité, la couverture à terme, la forme infra-horaire des prix (le marché est au pas de 15 min depuis le 1/10/2025) et les soutiens. → Valeur des batteries, de la DSR et du thermique rapide **sous-estimée**, sous-investissement dans l'EVA, donc **besoins non couverts gonflés**, qui peuvent justifier des soutiens 19g.
 2. **Risque.** VAN neutre au risque, avec un taux par actif. L'ERAA elle-même impose d'atténuer la réaction des investisseurs aux pics de prix ; EU-Flex ne le fait pas. Le profit d'une année cible est **figé jusqu'au démantèlement** (20 ans sur une seule année de marché).
 3. **Formation des prix.** Engagement des unités relaxé sur des flottes agrégées, prix duaux sans règle documentée, pas horaire. Le seuil du mécanisme HMMCP est calculé sur 70 % du plafond **initial** au lieu du plafond **en vigueur**, et le coût du délestage est incohérent avec les plafonds : le plafond intraday de 10 000 €/MWh n'est jamais atteint.
-4. **Attribution par technologie.** La métrique ne se referme pas sur le besoin et ne mesure pas la valeur. Exemple : 2 % du besoin attribués à la DSR implicite, alors que son retrait multiplie l'ENS par 4. Les **contributions des actifs existants** (hydraulique, thermique) sont mal mesurées, alors qu'elles conditionnent le volume « manquant » et la répartition DSR/stockage exigée par l'art. 19f.
-5. **Incertitude et validation.** Aucun intervalle de confiance (le P99,9 repose sur environ 9 heures par année climatique ; IC90 % de ±7 à ±20 %). Aucune rétro-simulation publiée, malgré l'engagement de la spécification.
+4. **Attribution par technologie.** La métrique ne se referme pas sur le besoin et ne mesure pas la valeur. Exemple : 2 % du besoin attribués à la DSR implicite, alors que son retrait multiplie l'ENS par 4. La viabilité des actifs de pointe repose sur très peu d'heures : 95 % de la marge annuelle de la pointe gaz se fait en 50 heures, 100 % de celle de la DSR explicite en 10 heures, sur **une seule** année climatique extrapolée sur 20 ans. Les **contributions des actifs existants** (hydraulique, thermique) sont mal mesurées, alors qu'elles conditionnent le volume « manquant » et la répartition DSR/stockage exigée par l'art. 19f.
+5. **Robustesse de la boucle d'investissement.** Dans l'EVA complète, la batterie passe de 100 à 3 100 puis à 245 MW (oscillation), et la boucle **s'arrête à l'itération 3** sur une fenêtre infaisable. Les décisions d'entrée et de sortie simulées ne sont pas stables.
+6. **Incertitude et validation.** Aucun intervalle de confiance (le P99,9 repose sur environ 9 heures par année climatique ; IC90 % de ±7 à ±20 %). Aucune rétro-simulation publiée, malgré l'engagement de la spécification.
 
 ## 4. Position recommandée
 

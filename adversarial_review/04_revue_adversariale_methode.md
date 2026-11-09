@@ -207,6 +207,67 @@ Sorties : [`evidence/method_experiments_cheap.txt`](evidence/method_experiments_
 
 ---
 
+### 4.4 Expériences complémentaires, angle producteur / investisseur
+
+Sorties : [`evidence/`](evidence/) ; scripts `compare_npv.py`, `revenue_concentration.py`, `analyse_eva_ds.py`. Correctifs d'expérience (non appliqués au modèle sur cette branche) : [`patches/`](patches/).
+
+**(a) VAN/MW selon la convention d'UC** (`compare_npv.py`, première itération)
+
+| Actif | VAN/MW, référence LP (k€/MW) | VAN/MW, UC binaire (k€/MW) | Facteur |
+|---|---|---|---|
+| Batterie N1 | 410 | 9 592 | ×23 (revenus de réserve 3,9 → 66,7 M€/an) |
+| DSR implicite N1 | 1 672 | 14 568 | ×8,7 |
+| Nucléaire N2 | 2 326 | 385 | −83 % |
+| Gaz N1 | −269 | −1 814 | ×6,7 |
+| Hydraulique N3 | 8 942 | 5 360 | −40 % |
+
+Ces écarts dépassent de **deux ordres de grandeur** la bande de convergence de l'EVA (±70 k€/MW). Dans un système proche de l'équilibre, la convention d'UC **inverse donc le verdict de viabilité**. Sur le teaser, loin de l'équilibre, aucun verdict ne s'inverse.
+
+**(b) Flottes découpées en 10 unités, relaxation LP** : résultats identiques à ±1 % de la référence (ENS 5,87 contre 5,93 GWh ; prix ±1 %). La relaxation est invariante au découpage, comme attendu. La comparaison décisive avec un engagement entier à 10 unités est en cours (§4.5).
+
+**(c) Concentration des marges** (`revenue_concentration.py`, DA, une seule année climatique)
+
+| Actif | Part de la marge brute annuelle réalisée en 10 h | en 50 h | aux prix ≥ 3 500 €/MWh |
+|---|---|---|---|
+| Gaz N1 (pointe) | 36 % | **95 %** | 0 % |
+| DSR explicite N2/N3 | **100 %** | 100 % | 99-100 % |
+| DSR implicite N3 | 39 % | 77 % | 32 % |
+| Batterie N1 | 9 % | 25 % | 0 % |
+| Nucléaire, hydraulique | 3 % | 6 % | 2-3 % |
+
+La viabilité des actifs de pointe et de flexibilité repose sur **quelques dizaines d'heures d'une seule année climatique**, extrapolées sur 20 ans (profit constant après la dernière année cible). C'est précisément la configuration dans laquelle l'ERAA impose d'atténuer la pondération des pics, et où l'ESIG demande de quantifier les queues. EU-Flex ne fait ni l'un ni l'autre.
+
+**(d) Stockage fictif avec ou sans pertes** (`analyse_eva_ds.py --ds`, cibles d'écrêtement 5 % (ct1) et 2 % (ct2), rendements aller-retour 0,85 / 0,60 / 0,35 pour 4 / 50 / 200 h)
+
+| Durée, cible | Sans pertes (modèle) | Avec pertes | Énergie chargée → restituée (avec pertes) |
+|---|---|---|---|
+| 4 h, 5 % | 20,5 GW | 8,4 GW | — |
+| 4 h, 2 % | 97,5 GW | **22,4 GW** | 29,9 → 25,4 TWh (4,5 TWh perdus) |
+| 50 h, 2 % | 13,8 GW | 9,9 GW | — |
+| 200 h, 2 % | 9,8 GW | 9,4 GW | 10,5 → **3,7 TWh** (6,8 TWh perdus) |
+
+**Résultat contre-intuitif, et finding de validité de construction (nouveau, M11-bis)** : avec pertes, le besoin calculé **diminue**. La contrainte de cible porte sur la production EnR non écrêtée. L'énergie **dissipée** dans le stockage y compte donc comme « intégrée » : un stockage à faible rendement agit comme une charge de délestage (*dump load*) et atteint la cible à moindre capacité. Introduire tels quels les rendements exigés par la FNAM 8(10) **sous-estimerait** le besoin. La cible doit porter sur l'énergie EnR **effectivement consommée** (nette des pertes de stockage), conformément à la notion de RES « effectively integrated » de la FNAM 2(2)(bb). Ce point s'ajoute à la critique initiale (sans pertes, donc biais vers le bas) : **dans les deux cas, l'indicateur actuel ne mesure pas un besoin de stockage**.
+
+**(e) EVA complète** (`teaser-eva` avec clustering temporel documenté, 30 itérations au plus)
+
+| Itération | Gaz N1 (MW) | Batterie N1 (MW) | VAN batterie (k€/MW) | VAN gaz (k€/MW) |
+|---|---|---|---|---|
+| 0 (année complète) | 30 000 | 100 | +410 | −269 |
+| 1 (semaines représentatives) | 27 000 | **3 100** | −900 | −417 |
+| 2 | 24 145 | **245** | −532 | −119 |
+| 3 | — | — | — | — |
+
+- **Dépassement puis effondrement** de la batterie (+3 000 MW puis −2 855 MW) : l'oscillation à pas fixe démontrée par test unitaire (F-11c) est **observée** dans l'EVA réelle.
+- À l'itération 3, une fenêtre day-ahead devient **infaisable** malgré le délestage, et **toute la boucle EVA s'arrête** (comportement par défaut).
+- Les VAN des actifs non modifiés varient fortement entre l'itération 0 (année complète) et 1 (semaines représentatives) : éolien N1 −30 %, hydraulique −38 %, nucléaire de +2 326 à −12 k€/MW. Les changements de capacité et l'approximation par clustering ne sont pas séparables ici, mais l'ampleur pose la question de la validation du clustering pour l'EVA.
+- Suite de la trajectoire (relance tolérante aux fenêtres infaisables) : §4.5.
+
+**(f) Prévision intraday réduite à 8 h** (oracle) : avec les réglages par défaut, **l'intraday devient infaisable** dès la fenêtre 21 (4 janvier) malgré les variables de délestage. La formulation dépend donc d'une prévision longue pour rester faisable. En mode tolérant : 17 fenêtres infaisables sur les 811 premières. Résultats complets : §4.5. *(Constat annexe : les fichiers LP d'infaisabilité sont écrits dans `var/teaser/` à la racine du dépôt, quel que soit le répertoire de travail du run, d'où un risque d'écrasement entre runs.)*
+
+### 4.5 Résultats des expériences longues
+
+*[À compléter à la fin des runs : oracle 8 h, engagement entier à 10 unités, trajectoire EVA complète.]*
+
 ## 5. Matrice d'écarts contre le référentiel d'état de l'art (`05`)
 
 Légende : ✅ au niveau de l'état de l'art · ⚠️ partiel · ❌ en deçà. La colonne « plancher » indique seulement la position par rapport à l'ERAA ou à la FNAM, à titre d'information.

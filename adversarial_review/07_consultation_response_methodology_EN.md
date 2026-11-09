@@ -51,7 +51,9 @@ Art. 19e(2)(a) requires evaluating needs under "different assumptions in respect
 The NPV is risk-neutral, with a single hurdle rate per asset. The ERAA methodology itself (ACER Decision 04/2026) requires mitigating investors' reaction to price spikes, by default through "partial discounting of Monte Carlo sample years with the highest revenues". EU-Flex has no such mechanism, so rare scarcity rents may be over-weighted.
 → **Request:** introduce explicit risk treatment (CVaR or ERAA-consistent discounting of high-revenue years), technology-specific and documented hurdle rates, and sensitivities.
 
-**1.3 The revenue stack is incomplete for flexible assets.**
+**1.3 Revenue concentration and the revenue stack.** In the teaser, the peaker earns 95 % of its annual gross margin in 50 hours and explicit DSR 100 % in 10 hours, from a **single** climate year extrapolated over 20 years. Viability therefore rests on tail events that the methodology neither samples (one climate year) nor risk-weights.
+
+**1.3b The revenue stack is incomplete for flexible assets.**
 NPV includes day-ahead energy, intraday deviations and day-ahead reserve capacity. It excludes balancing energy and activation revenues, capacity mechanisms (only exogenous and disabled by default), forward hedging, support schemes and sub-hourly price shape (hourly model, while SDAC moved to 15-minute MTU on 1 October 2025). These omissions systematically understate the merchant value of batteries, demand response and fast thermal plants. The EVA then under-builds flexibility, which **inflates the "uncovered needs"** that could later justify Art. 19g payments.
 → **Request:** complete the revenue stack, or at least bound the omitted revenues with exogenous ranges, and publish asset-level revenue diagnostics by stream.
 
@@ -61,6 +63,7 @@ Profit per MW is interpolated between target years and **held constant from the 
 
 **1.5 The EVA equilibrium is ill-defined and its convergence is not reported.**
 Fixed MW steps (default 800 MW for every asset and zone) can oscillate without converging. The convergence test can be blocked by assets saturated at their bounds, or wrongly declared "converged" when monotonicity constraints block an unprofitable asset. The status (e.g. "Aborted") is not reported in the published outputs.
+In ACER's own EVA configuration (teaser-eva, with the documented temporal clustering) we observe the battery capacity jump from 100 to 3 100 MW and fall back to 245 MW within two iterations (NPV +410 → −900 → −532 k€/MW). At iteration 3 a day-ahead window becomes infeasible despite load shedding, and the whole EVA aborts under default settings.
 → **Request:** use an equilibrium or co-optimisation formulation with guaranteed convergence, or adaptive steps, and publish convergence status, residual NPV and saturated assets with every result.
 
 **1.6 Price formation.**
@@ -129,7 +132,8 @@ The default is hard-coded synthetic noise, with fixed seeds, perfectly correlate
 ## 6. Storage needs for RES integration ("dummy storage")
 
 The dummy storage is lossless by construction, contrary to FNAM Art. 8(10), which requires "the most representative roundtrip efficiency for each" duration of 2-200 h. Its cost is identical for all durations. Its target applies year by year rather than as an average across weather years (FNAM Art. 8(12)(a)). Research shows that efficiency and energy-capacity cost are the decisive parameters (Sepulveda et al., Nature Energy 2021), and that multi-year optimisation materially changes long-duration needs (Ruhnau & Qvist 2022; Dowling et al., Joule 2020).
-→ **Request:** technology-neutral storage classes with realistic efficiencies, multi-year chained optimisation, average-based targets, Pareto curves and sensitivities.
+Adding efficiencies alone is **not** a fix. In our test (round-trip efficiencies of 0.85 / 0.60 / 0.35 for 4 / 50 / 200 h), the computed need **falls**: for 4 h at a 2 % target, from 97.5 GW to 22.4 GW. A 200-h store absorbs 10.5 TWh and returns only 3.7 TWh. Energy dissipated in storage counts as "integrated" RES, so the indicator rewards waste, acting as a dump load.
+→ **Request:** redefine the target on RES energy **effectively consumed**, net of storage losses (cf. FNAM Art. 2(2)(bb), "effectively integrated"), then use technology-neutral storage classes with realistic efficiencies, multi-year chained optimisation, average-based targets, Pareto curves and sensitivities.
 
 ---
 
