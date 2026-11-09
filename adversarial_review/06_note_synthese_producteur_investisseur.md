@@ -21,8 +21,8 @@ L'architecture est saine : un outil ouvert, une simulation de marché day-ahead 
 
 | Convention modifiée, à système physique identique | Effet mesuré |
 |---|---|
-| Représentation de l'engagement des unités (relaxée ou binaire) | ENS **×30** ; VAN/MW batterie **×23** (revenus de réserve ×17) ; nucléaire **−83 %** ; gaz ×6,7 (en négatif) |
-| Flottes découpées en 10 unités (référence plus fidèle) | LP : inchangé (±1 %) ; engagement entier : [en cours] |
+| Représentation de l'engagement des unités : option binaire sur flotte (proposée par le manuel comme plus fidèle) | ENS **×30** ; VAN/MW batterie **×23** ; nucléaire −83 %. Mais c'est une option **invalide** sur des flottes agrégées |
+| Engagement entier à 10 unités (référence plus fidèle) | **La relaxation par défaut tient** à ±2 % (ENS, prix, coût). Mais VAN de la DSR explicite ×6,6 et écart d'écrêtement −15 à −30 %. Au sein d'une flotte, la VAN par unité va de **+78 à −338 k€/MW** (moyenne −269) : **l'EVA décide sur la moyenne, pas sur le MW marginal** |
 | Prix de rareté qui fixe l'équilibre EVA (4 500 ou 10 000 €/MWh) | Niveau d'adéquation « convergé » : **5,4-8,4 h** contre **2,4-3,7 h** de rareté par an |
 | Source des erreurs de prévision (bruit synthétique par défaut ou prévisions fournies) | Besoin de court terme P99,9 **×2,3** |
 | Méthode de court terme (« simulation » ou « probabiliste ») | Écart de plus de **×1 000** |

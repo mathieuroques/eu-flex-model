@@ -27,7 +27,7 @@ However, in its present form the methodology does **not yet produce robust estim
 
 | Convention changed (same physical system) | Effect observed on the teaser case |
 |---|---|
-| Unit-commitment representation (relaxed vs binary on aggregated fleets) | Energy not served ×30 ; battery NPV/MW ×23 ; nuclear NPV/MW −83 % |
+| Binary unit-commitment option on aggregated fleets (presented in the manual as higher fidelity) | Energy not served ×30 ; battery NPV/MW ×23. The option is invalid; the default relaxation matches a 10-unit integer commitment within ±2 % on ENS, prices and cost, but not on peak-asset NPV (explicit DSR ×6.6) or signed shortfalls (−15 to −30 %) |
 | Scarcity price setting the EVA equilibrium (4 500 vs 10 000 €/MWh) | Adequacy level at "convergence" differs by a factor 2-3 (scarcity hours/yr) |
 | Forecast-error source (synthetic default vs supplied forecasts) | P99.9 short-term need ×2.3 |
 | Short-term method ("simulation" vs "probabilistic") | Uncovered short-term needs differ by more than three orders of magnitude |
@@ -67,8 +67,8 @@ In ACER's own EVA configuration (teaser-eva, with the documented temporal cluste
 → **Request:** use an equilibrium or co-optimisation formulation with guaranteed convergence, or adaptive steps, and publish convergence status, residual NPV and saturated assets with every result.
 
 **1.6 Price formation.**
-Unit commitment is relaxed on aggregated fleets, and prices are duals of an interior-point solution without crossover. The binary option offered in the manual as higher fidelity is invalid on aggregated fleets: it switches 30 GW on or off at once. In our test it changes NPV/MW by up to 23×.
-→ **Request:** use clustered integer unit commitment (integer number of online units per cluster) or validate the relaxation against it, document the pricing rule (and uplift) and use vertex duals. Implement the HMMCP adjustment on **70 % of the prevailing cap** (not the initial cap), consistent with ACER Decision 01/2023 and 02/2026.
+Unit commitment is relaxed on aggregated fleets, and prices are duals of an interior-point solution without crossover. The binary option offered in the manual as higher fidelity is invalid on aggregated fleets: it switches 30 GW on or off at once. In our test it changes NPV/MW by up to 23×, whereas a 10-unit integer commitment reproduces the default relaxation within ±2 % on system-level results. **The EVA also decides on the average NPV per MW of an aggregated fleet, not on the marginal MW.** Within a gas fleet split into ten near-identical units, unit NPV ranges from +78 to −338 k€/MW (fleet average −269 k€/MW). That spread is more than five times the convergence band, so average-based entry and exit decisions are biased.
+→ **Request:** remove or relabel the binary option on aggregated fleets; base EVA decisions on **marginal** value (capacity duals or incremental runs) rather than fleet averages; validate the relaxation against clustered integer commitment on a published sample, document the pricing rule (and uplift) and use vertex duals. Implement the HMMCP adjustment on **70 % of the prevailing cap** (not the initial cap), consistent with ACER Decision 01/2023 and 02/2026.
 
 ---
 
@@ -168,7 +168,7 @@ The Modelling Specification (§5) foresees unit, regression and historical valid
 | Lossless dummy storage ; single, calendar-cut years | ↓ storage needs | By construction / literature |
 | Perfect-foresight hydro plan | ↓ | By construction |
 | Synthetic forecast errors | ↓ or ↑ (×2.3 in the teaser) | Measured |
-| Unit-commitment convention ; price cap / VoLL in the EVA | ↕ (×30 ENS ; ×2-3 adequacy level) | Measured |
+| Price cap / VoLL in the EVA ; average- vs marginal-value EVA decisions | ↕ (×2-3 adequacy level ; ±400 k€/MW within a fleet) | Measured |
 
 **Conclusion.** Before EU-Flex outputs inform national objectives or support schemes, ACER should publish the uncertainty ranges and sensitivity analyses above. A single number per zone, without ranges, would not satisfy Art. 19h(a) ("not go beyond what is necessary").
 

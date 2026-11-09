@@ -4,7 +4,7 @@
 
 | # | Affirmation de la revue | Objection plausible | Solidité | Parade ou réserve à afficher |
 |---|---|---|---|---|
-| C1 | Les déficits varient d'un facteur 30 selon l'UC ; la VAN/MW des actifs d'un facteur 6 à 23 (batterie) | Le teaser est illustratif, non calibré, loin de l'équilibre (une seule itération EVA) ; l'option MILP est celle que nous jugeons invalide, donc le ×30 mesure la sensibilité d'une option fausse, pas l'erreur de l'option par défaut | **Moyenne** | Présenter le ×30 comme preuve que **l'UC est une convention dominante non tranchée**, pas comme l'erreur du LP. L'erreur propre du LP n'est mesurable qu'avec un clustered UC entier (expérience « 10 unités », §4 de 04). Les ordres de grandeur ne se transposent pas tels quels au modèle UE |
+| C1 | Les déficits varient d'un facteur 30 selon l'UC ; la VAN/MW d'un facteur 6 à 23 | **Objection confirmée par notre propre test** : un engagement entier à 10 unités reproduit la relaxation LP par défaut à ±2 % (ENS, prix, coût). Le ×30 ne vient que de l'option binaire sur flotte, invalide | **Corrigée** | Ne plus présenter le ×30 comme une erreur du modèle par défaut. Retenir : (i) l'option binaire proposée comme « plus fidèle » est invalide ; (ii) la VAN des actifs de pointe (DSR ×6,6) et les shortfalls signés (−15 à −30 %) restent sensibles ; (iii) l'EVA décide sur la VAN moyenne d'une flotte, non marginale (écart ~400 k€/MW) |
 | C2 | Les contributions par technologie ne bouclent pas (EnR comptée deux fois) | Le notebook ACER retire l'EnR ; la métrique par co-mouvement est un **choix explicite** de la spécification (éq. 13.8) | **Forte** pour l'absence de bouclage des sorties publiées ; **moyenne** pour « ne mesure pas la valeur » (un seul contrefactuel, sur un seul système) | Insister sur l'exigence de bouclage (P4) et sur le résidu « RES/Curtailment » du notebook, qui absorbe les erreurs. Pour la valeur : demander des contrefactuels systématiques plutôt qu'affirmer une généralité |
 | C3 | La méthode probabiliste surestime massivement les besoins non couverts (8 760 h contre 360 h) | Notre correction ajoute la puissance de stockage **sans contrainte d'état de charge** : c'est une borne haute de la marge, donc la vraie réduction est plus faible | **Forte** sur le principe (non-conformité avec la FNAM 10(2)), **moyenne** sur l'ampleur | Annoncer « jusqu'à » et demander le calcul avec état de charge |
 | C4 | L'oracle intraday biaise à la baisse les besoins de court terme | Nos tests d'horizon encadrent l'effet sans reproduire une vraie révélation progressive avec prévisions intermédiaires | **Forte** sur le sens, désormais **mesuré** (8 h : +13 à +22 %) ; **moyenne** sur l'ampleur réelle (borne basse ; 1 % de fenêtres infaisables traitées en mode tolérant) | Présenter +13-22 % comme une borne basse ; demander à ACER une expérience de révélation séquentielle |
@@ -27,6 +27,6 @@
 
 ## Affirmations à formuler avec prudence
 
-- Ampleurs issues du teaser (×30, ×23, ×2,3) : **ordres de grandeur illustratifs**.
+- Ampleurs issues du teaser (×23, ×2,3, ×6,6) : **ordres de grandeur illustratifs**. Le ×30 sur l'ENS ne concerne que l'option binaire invalide, pas le modèle par défaut.
 - Effet oracle : sens établi, ampleur encadrée seulement.
 - Briques construites du référentiel 05 : propositions, pas des normes.
