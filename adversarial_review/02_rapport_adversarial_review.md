@@ -32,7 +32,7 @@ En revanche, **l'outil ne remplit pas aujourd'hui son objectif réglementaire** 
 | Axe | Travaux |
 |---|---|
 | Statique | Lecture du code critique : `calculate_model_outputs.py`, `compute_npv.py`, `update_capacity.py`, `update_price_cap.py`, `build_base_network.py`, `run_dummy_storage_optimization.py`, `run_integration_tests.py`, règles Snakemake. Lecture de la spécification (équations rendues en image, p. 92-109), du manuel et du notebook |
-| Exécution | Run complet du teaser (`config/teaser.yaml`) ; exécution de la suite d'intégration du modèle ; réplique pour la reproductibilité ; runs « année cible bissextile 2028 » et « année climatique bissextile 2016 » |
+| Exécution | Run complet du teaser (`config/teaser.yaml`) ; exécution de la suite d'intégration du modèle ; réplique pour la reproductibilité ; runs « année cible bissextile 2028 » et « année climatique bissextile 2016 » ; construction des réseaux en mode prévisions synthétiques. **Non exécutés** (coût de calcul) : le run EVA à 30 itérations (`teaser-eva.yaml`, plusieurs heures) et les 2 × 63 optimisations *dummy storage* ; ces volets sont évalués par lecture du code et par tests unitaires sur les fonctions de production |
 | Recalcul indépendant | `adversarial_review/scripts/independent_recompute.py` : besoins FNAM 8(5), percentiles FNAM 10(1) et rampes, recalculés depuis les CSV bruts |
 | Tests adversariaux unitaires | `adversarial_review/tests/test_indicator_adversarial.py` : réseaux synthétiques à solution analytique connue (11 tests ; chaque échec documente un défaut) |
 | Injection de données aberrantes | 7 jeux corrompus (M1-M6, bissextiles) passés à `build_base_network` ; comportement du solveur face aux NaN vérifié sur un réseau PyPSA minimal |
@@ -191,7 +191,7 @@ Comportement du solveur avec des NaN (réseau PyPSA minimal, HiGHS) : une charge
 **Preuve.**
 
 - **Année climatique bissextile (2016, 8 784 h)** : le réseau de base conserve le 29 février (contrairement aux commentaires du code, qui affirment des snapshots « always leap-day-free »). Le run plante ensuite dans `run_day_ahead` : `plan_maintenance.py:505`, `Timestamp.replace(year=…)` → `ValueError: day is out of range for month` (`runs/adv_cy2016/logs/`). Le test unitaire `test_F05_leap_climate_year_crash` montre que `calculate_residual_load` (`_shift_time_columns_to_year`, l. 445) plante de la même façon.
-- **Année cible bissextile (2028, l'une des années cibles par défaut de la spécification)** : l'index « heure de l'année » saute 24 valeurs après le 28 février et va jusqu'à 8 784 pour 8 760 pas (`test_F05b`). Résultat du run complet : voir §3bis.
+- **Année cible bissextile (2028, l'une des années cibles par défaut de la spécification)** : l'index « heure de l'année » saute 24 valeurs après le 28 février et va jusqu'à 8 784 pour 8 760 pas (`test_F05b`). Le run complet aboutit, mais les sorties contiennent 24 heures NaN et un jour fantôme à besoin nul (jour 60). Le besoin hebdomadaire varie de −2,6 % (N1) à +2,2 % (N3) par rapport au même calcul étiqueté 2030, à données physiques identiques : `ts.replace(year=TY)` ne réaligne pas les jours de la semaine de l'année climatique sur ceux de l'année cible (§3bis).
 
 **Impact.** L'ERAA et la FNAM (art. 6(5)) utilisent jusqu'à 36 années climatiques (1982-2017), dont 9 bissextiles. En mode CSV (le seul chemin public), un quart des années climatiques ne peut pas être traité.
 
@@ -302,7 +302,14 @@ Aucun test unitaire n'est livré, et il n'y a pas de CI de tests (le seul workfl
 
 ## 3bis. Résultats des runs complémentaires
 
-Voir `adversarial_review/evidence/runs_complementaires.md` (reproductibilité par réplique indépendante, année cible bissextile 2028, année climatique bissextile 2016).
+Détail : [`evidence/runs_complementaires.md`](evidence/runs_complementaires.md).
+
+| Run | Résultat |
+|---|---|
+| Réplique indépendante du teaser | **73/73 variables identiques bit à bit** : déterminisme confirmé (même machine, même environnement) |
+| Année cible 2028 (bissextile), mêmes données | Le run aboutit, mais les sorties horaires ont **8 784 heures dont 24 NaN**. Le besoin journalier compte **366 jours dont un jour fantôme à 0**. Le besoin hebdomadaire **change de −2,6 % (N1) par le seul changement d'étiquette d'année cible**, car les jours de la semaine ne sont pas réalignés lors du passage de l'année climatique à l'année cible |
+| Année climatique 2016 (bissextile) | Réseau construit avec le 29 février, puis **plantage** dans `run_day_ahead` (`plan_maintenance.py:505`) |
+| Jeux corrompus M1-M6 | Voir F-07 |
 
 ---
 
@@ -320,6 +327,7 @@ Ces contre-preuves sont aussi importantes que les défauts : elles délimitent c
 | Liens bidirectionnels après agrégation | OK (p_min_pu = −1 conservé en série temporelle) |
 | Sécurité du code (eval/exec, désérialisation, shell, injection CI) | Aucune vulnérabilité exploitable identifiée. Surface d'attaque faible (pas de réseau à l'exécution, YAML chargé par Snakemake) |
 | Installation et exécution de bout en bout | OK (Linux, Python 3.12, versions du lock) |
+| Reproductibilité (réplique indépendante) | **Bit à bit identique** (73/73 variables, prix DA écart 0,0) sur la même machine |
 | Erreur de prévision ID − DA non nulle en production (collision F-01) | Pas de collision sur le teaser (tables statiques différentes) : défaut latent seulement |
 
 ---
@@ -337,7 +345,7 @@ Ces contre-preuves sont aussi importantes que les défauts : elles délimitent c
 | Contributions par technologie (art. 19e(2), 19f) | ❌ Non bouclées, masquées par un résidu |
 | Robustesse aux données réelles (ERAA, 36 CY) | ❌ Pas de validation des séries ; plantage sur année bissextile |
 | Fiabilité de l'EVA | ⚠️ Convergence non garantie et non restituée ; plafond de prix inopérant |
-| Reproductibilité et traçabilité | ⚠️ Graines fixes (bien), mais un seul tirage, aucun intervalle, historique non auditable |
+| Reproductibilité et traçabilité | ✅ Déterminisme bit à bit vérifié ; ⚠️ mais un seul tirage, aucun intervalle de confiance, historique non auditable |
 | Assurance qualité | ❌ Aucun test, aucune CI ; l'oracle fourni échoue |
 | Passage à l'échelle | ⚠️ Non démontré publiquement |
 
