@@ -11,6 +11,9 @@ Revue adversariale indépendante de la version préliminaire 1.0.0-rc2 du modèl
 | 5. Notes de recherche sur l'état de l'art (grille Q1-Q12, sources ; remplacé comme étalon par le n° 7) | [`03_etat_de_l_art_methodologique.md`](03_etat_de_l_art_methodologique.md) |
 | 6. **Revue adversariale de la méthode** contre l'état de l'art, expériences de robustesse, verdict méthodologique, méthode cible | [`04_revue_adversariale_methode.md`](04_revue_adversariale_methode.md) |
 | 7. **Référentiel d'état de l'art autonome** (14 briques ; état de l'art établi ou construit lorsqu'il n'existe pas ; l'ERAA y est un plancher réglementaire) — **étalon de la revue méthodologique** | [`05_referentiel_etat_de_l_art.md`](05_referentiel_etat_de_l_art.md) |
+| 8. **Note de synthèse producteur / investisseur** (2 pages, lien avec les art. 19f-19h, questions pour le webinaire) | [`06_note_synthese_producteur_investisseur.md`](06_note_synthese_producteur_investisseur.md) |
+| 9. **Projet de réponse méthodologique à la consultation ACER** (anglais, demandes vérifiables) | [`07_consultation_response_methodology_EN.md`](07_consultation_response_methodology_EN.md) |
+| 10. **Contre-revue** : solidité de nos propres affirmations | [`08_contre_revue.md`](08_contre_revue.md) |
 
 ## Preuves reproductibles
 
