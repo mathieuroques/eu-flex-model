@@ -22,20 +22,23 @@ Le critère de comparaison est **la qualité et la robustesse du résultat**, pa
 
 ### 2.1 Incertitude climatique et nombre d'années
 
-- **ERAA** : 35-36 années climatiques historiques (PECD), Monte-Carlo de pannes, critère de **convergence statistique** du nombre de tirages [PRATIQUE]. Le PECD v4.x de Copernicus (C3S) et d'ENTSO-E intègre désormais des **projections climatiques**, et non plus seulement des réanalyses historiques. La v4.1 couvre 1980-2021 ; la v4.2 soutient l'ERAA 2026 [FAIT, Copernicus CDS / ECMWF].
-- **Elia AdeqFlex 2025** : année Monte-Carlo construite sur **200 années climatiques synthétiques** (jeu Météo-France), tirages de disponibilité thermique, convergence imposée par la méthodologie ERAA [PRATIQUE].
-- **Recherche** : les besoins de stockage sont dominés par des événements rares et longs (« Dunkelflaute »). L'année la plus extrême demande **plus de deux fois** le stockage de l'année moyenne ; la période qui dimensionne peut atteindre ~12 semaines. Raisonner sur des années isolées **sous-estime** les besoins (Ruhnau & Qvist 2022). L'événement européen le plus extrême de la série étudiée par Kittel et al. est l'hiver 1996/97. Gøtske et al. testent 62 années météo (1960-2021) : les systèmes dimensionnés sur des années à événements composés sont plus robustes [LIT].
+- **ERAA** [FAIT, méthodologie révisée, Décision ACER 04/2026 ; annexe III de la Décision 07/2025] : le dispatch de l'ERAA 2024 tourne sur **36 scénarios météo**, mais l'EVA sur **3** seulement. La méthodologie révisée impose pour les scénarios centraux soit la meilleure projection climatique, soit des années climatiques **pondérées**, soit **au plus les 30 années historiques les plus récentes**. Elle impose aussi un Monte-Carlo (années climatiques × tirages de pannes) avec **critère de convergence** sur le coefficient de variation de l'ENS, et la publication de N et de α(N). Le PECD v4.x de Copernicus (C3S) et d'ENTSO-E intègre des **projections climatiques** ; la v4.1 couvre 1980-2021, la v4.2 soutient l'ERAA 2026 [FAIT, Copernicus CDS / ECMWF].
+- **Elia AdeqFlex 2025** [source secondaire : extraits de recherche des documents Elia ; PDF primaires inaccessibles, HTTP 403] : année Monte-Carlo construite sur **200 années climatiques synthétiques** (jeu Météo-France), tirages de disponibilité thermique, convergence imposée par la méthodologie ERAA.
+- **Recherche** [FAIT pour Kittel et al., texte intégral] : Kittel, Roth et Schill modélisent 35 années météo **d'été à été**, car « our summer-to-summer modeling approach better captures the effects of compound drought events spanning across the turn of years, as compared to models using single calendar years ». L'épisode le plus extrême est l'hiver 1996/97 ; le stockage longue durée atteint jusqu'à 351 TWh (7,1 % de la demande annuelle).
+- **Recherche** [LIT] : les besoins de stockage sont dominés par des événements rares et longs (« Dunkelflaute »). L'année la plus extrême demande **plus de deux fois** le stockage de l'année moyenne ; la période qui dimensionne peut atteindre ~12 semaines. Raisonner sur des années isolées **sous-estime** les besoins (Ruhnau & Qvist 2022). L'événement européen le plus extrême de la série étudiée par Kittel et al. est l'hiver 1996/97. Gøtske et al. testent 62 années météo (1960-2021) : les systèmes dimensionnés sur des années à événements composés sont plus robustes [LIT].
 - **Conséquence** : l'unité d'analyse pertinente est la **série pluriannuelle continue**, et non l'année isolée réinitialisée.
 
 ### 2.2 Erreurs de prévision et court terme
 
 - **Génération de scénarios d'erreurs** : conversion des erreurs en variable gaussienne multivariée pour en capturer la **dépendance temporelle** (Pinson et al., Wind Energy 12(1) 2009, 51-62), puis copules gaussiennes adaptatives et dépendance **spatio-temporelle** (Tastu, Pinson, Madsen) [LIT].
 - **Dimensionnement des réserves** : SO GL art. 157 (couverture probabiliste des déséquilibres ≥ 99 % du temps et incident de dimensionnement). Elia pratique un **dimensionnement dynamique** (apprentissage statistique + Monte-Carlo, risque estimé heure par heure, réestimé mensuellement) [PRATIQUE].
-- **Méthode Elia (AdeqFlex)** : distribution des erreurs de charge résiduelle, puis distribution des pannes fortuites, puis **convolution**, puis besoins de flexibilité par niveau de rapidité [PRATIQUE]. FNAM 10(1)(c) exige précisément de distinguer les deux distributions [FAIT].
+- **Méthode Elia (AdeqFlex)** [source secondaire] : besoins de flexibilité de court terme déterminés en trois étapes, dont une **convolution** des distributions (erreurs de prévision de la charge résiduelle et pannes fortuites, ces dernières issues d'une étude dédiée) ; **percentiles 0,1 % et 99,9 %** pour les besoins à la baisse et à la hausse ; trois métriques : flexibilité « slow », « fast » et « ramping » (sous-ensemble de « fast », réponse ≤ 5 min). La FNAM 10(1)(c) exige précisément de distinguer les deux distributions [FAIT].
 - **Queues de distribution** : estimer un P99,9 sur une année horaire revient à s'appuyer sur ~9 points. La pratique statistique pour les quantiles extrêmes est la **théorie des valeurs extrêmes** (dépassements de seuil, loi de Pareto généralisée), ou au minimum le pooling multi-années avec intervalles bootstrap [HYP, standard statistique].
 - **Exploitation séquentielle** : les modèles de référence d'intégration EnR simulent l'arrivée progressive de l'information par une **planification glissante stochastique** avec mises à jour de prévision (par ex. WILMAR, Meibom et al., Irlande) [LIT, non consulté en texte intégral].
 
-### 2.3 Résolution temporelle
+### 2.3 Résolution temporelle et structure d'information
+
+- **Standard ERAA** [FAIT, méthodologie 2026, art. 4(1)(g)-(h)] : « the MTU shall be smaller than or equal to an hour ». « Unless the modelling framework allows for a proper characterisation of unforeseen imbalances, the ED shall rely on a "perfect foresight" principle » : erreurs de prévision **et pannes fortuites ignorées**. → **La référence industrielle européenne est en deçà d'EU-Flex** sur la structure d'information ; la recherche (planification glissante stochastique) est au-delà.
 
 - **SDAC** est passé au **pas de 15 minutes** (MTU 15 min) le 30 septembre 2025, pour livraison le 1er octobre 2025, dans toutes les zones [FAIT, NEMO Committee, EPEX, Nord Pool]. SIDC et l'équilibrage sont aussi au pas de 15 minutes.
 - La FNAM raisonne « par MTU » et distingue la flexibilité « very fast / fast / slow » (5-15 min, 15-60 min, 1 h-J-1) [FAIT].
@@ -48,12 +51,12 @@ Le critère de comparaison est **la qualité et la robustesse du résultat**, pa
 
 ### 2.5 Stockage hydraulique saisonnier
 
-- **Pratique** : valeurs de l'eau calculées sous incertitude des apports et de la météo (programmation dynamique stochastique, SDDP ; outils EMPS/ProdRisk nordiques). Antares ne calcule pas lui-même les valeurs de l'eau : il les reçoit en entrée (calculées par des outils externes, par ex. `antaresWaterValues` de RTE) ou utilise une heuristique de courbes guides [FAIT, documentation Antares]. Les valeurs de l'eau sont un **coût d'opportunité** qui entre dans la formation des prix [FAIT].
+- **Pratique** : valeurs de l'eau calculées sous incertitude des apports et de la météo (programmation dynamique stochastique, SDDP ; outils EMPS/ProdRisk nordiques). Antares ne calcule pas lui-même les valeurs de l'eau : il les reçoit en entrée (calculées par des outils externes, par ex. `antaresWaterValues` de RTE) ou utilise une heuristique de courbes guides [FAIT, documentation Antares]. Les valeurs de l'eau sont un **coût d'opportunité** qui entre dans la formation des prix [FAIT]. **Standard ERAA** [FAIT, méthodologie 2026, art. 4(5)(a)] : une pré-optimisation *ex ante* à pas grossier (hebdomadaire ou saisonnier) est admise, avec respect des trajectoires min/max ; elle doit refléter les « expected operational principles » des exploitants. **L'approche d'EU-Flex est donc conforme au standard ERAA** ; seule la recherche va au-delà (valeurs de l'eau stochastiques).
 - La planification hydraulique **en prévision parfaite annuelle** est reconnue comme une borne optimiste de la flexibilité hydraulique [HYP, consensus de modélisation].
 
 ### 2.6 Viabilité économique (EVA) et équilibre
 
-- **ERAA** : EVA avec années climatiques pondérées. L'ACER a refusé les ERAA 2021 et 2022, notamment pour **l'incohérence entre l'EVA et le dispatch économique** [FAIT, Décision ACER 04/2023]. Elle a approuvé l'ERAA 2023 en l'amendant (scénario central visant à réduire le biais entre EVA et ED ; scénario de sensibilité qui expose les investisseurs à moins de pics de prix) [FAIT, Décision 06/2024]. Pour l'ERAA 2024 (Décision 07/2025), une **EVA fondée sur les revenus** a été testée en étude de cas, jugée encore immature [FAIT]. La révision de la méthodologie ERAA (Décision ACER 04/2026) traite explicitement l'**aversion au risque** des investisseurs par des taux de rendement exigés (*hurdle rates*) [FAIT, titre et résumé].
+- **ERAA** [FAIT] : l'EVA est soit une viabilité fondée sur les revenus (rendement attendu comparé au taux de rendement exigé ou au WACC), soit une minimisation du coût total, admise comme simplification (méthodologie 2026, art. EVA §2-6). L'ERAA 2024 a retenu la minimisation du coût, avec une EVA fondée sur les revenus testée en étude de cas. **Atténuation obligatoire de la réaction des investisseurs aux pics de prix**, par défaut une « partial discounting of Monte Carlo sample years with the highest revenues » (§16). L'ACER a refusé les ERAA 2021 et 2022 pour **l'incohérence entre l'EVA et le dispatch** [FAIT, Décision 04/2023]. Pour l'ERAA 2024, elle constate encore des écarts de **LOLE de 1,7 à 4 h** entre EVA et dispatch, dus notamment à **3 scénarios météo dans l'EVA contre 36 dans le dispatch** : « scarcity situations and pricing are not accurately reflected in the EVA, distorting investment signals » [FAIT, annexe III technique]. La révision de la méthodologie (Décision 04/2026) formalise l'aversion au risque (taux de rendement exigés, WACC) [FAIT].
 - **Théorie** : en concurrence parfaite, sans plafond de prix et avec tarification de la rareté à la VoLL, l'équilibre d'investissement coïncide avec l'optimum de coût, obtenu par optimisation directe (capacité + dispatch) ou par complémentarité. Avec des plafonds de prix, le niveau d'adéquation de l'équilibre est **fixé par le plafond et la VoLL** (« missing money ») [LIT, standard].
 - **Standard de fiabilité** : chaque État membre fixe un standard (LOLE) à partir de la VoLL et du CONE (art. 25 du règlement 2019/943, méthodologie ACER VoLL/CONE/RS) [FAIT, texte du règlement].
 
@@ -70,20 +73,20 @@ Le critère de comparaison est **la qualité et la robustesse du résultat**, pa
 
 ## 3. Grille d'évaluation dérivée (utilisée dans la revue)
 
-| Code | Critère de qualité | Référence de bonne pratique |
-|---|---|---|
-| Q1 | L'indicateur mesure un **déficit** (non couvert), probabilisé | Famille B, FNAM 9(4), 10(4) |
-| Q2 | Incertitude climatique : ≥ 30 années, séries continues, événements extrêmes, convergence statistique | ERAA, Elia, Ruhnau & Qvist, Gøtske |
-| Q3 | Erreurs de prévision empiriques, dépendance spatio-temporelle, conditionnelles, séparées des pannes | FNAM 10(1), Pinson, Elia |
-| Q4 | Révélation séquentielle de l'information (pas de prévision parfaite intrajournalière) | Planification glissante stochastique |
-| Q5 | Résolution au MTU de marché (15 min) | SDAC/SIDC depuis 2025, FNAM 10(1)(e) |
-| Q6 | Engagement des unités adapté à l'agrégation (clustered UC) ; règle de prix explicite | Palmintier & Webster |
-| Q7 | Hydraulique valorisée sous incertitude (valeurs de l'eau) | SDDP, Antares + valeurs de l'eau |
-| Q8 | EVA cohérente avec l'ED, équilibre bien défini, niveau d'adéquation ancré au standard de fiabilité | ERAA (décisions ACER), art. 25 |
-| Q9 | Stockage contrefactuel réaliste (rendements, multi-années) | FNAM 8(10), Ruhnau & Qvist |
-| Q10 | Attribution conservative (identité comptable) et/ou contrefactuelle | Heggarty 2020, ELCC/Shapley |
-| Q11 | Incertitude des résultats quantifiée (intervalles) | Standard statistique |
-| Q12 | V&V publiés (backcasting, benchmark ERAA) | Spécification §5 elle-même |
+| Code | Critère de qualité | Niveau industriel de référence (ERAA, texte vérifié) | Niveau recherche / meilleure pratique |
+|---|---|---|---|
+| Q1 | L'indicateur mesure un **déficit** probabilisé | ENS/LOLE probabilistes (adéquation) ; la FNAM 9(4) et 10(4) transpose la logique à la flexibilité | IRRE (Lannoye) ; convolution (Elia, source secondaire) |
+| Q2 | Incertitude climatique | ≤ 30 années récentes, années pondérées ou projections ; MC avec convergence α(N) publiée | 35-62 années, **été à été** (Kittel), événements composés (Gøtske) |
+| Q3 | Erreurs de prévision | **Ignorées** dans le dispatch ERAA (prévision parfaite) ; la FNAM 10(1) exige ≥ 2 ans d'historique | Scénarios gaussiens multivariés/copules (Pinson) ; convolution avec les pannes (Elia) |
+| Q4 | Structure d'information | **Prévision parfaite**, pannes connues d'avance | Planification glissante stochastique, révélation séquentielle |
+| Q5 | Résolution | MTU **≤ 1 h** | 15 min (marché réel depuis le 1/10/2025 ; FNAM 10(1)(e)) |
+| Q6 | Engagement des unités | Non prescrit en détail | Clustered UC entier (Palmintier & Webster) ; règle de prix explicite |
+| Q7 | Hydraulique | Pré-optimisation *ex ante* à pas grossier, trajectoires min/max | Valeurs de l'eau stochastiques (SDDP) |
+| Q8 | EVA | Viabilité fondée sur les revenus ou minimisation du coût ; atténuation des pics (actualisation partielle des années MC les plus rémunératrices) ; cohérence EVA/ED exigée par l'ACER | Équilibre/optimisation multi-années, aversion au risque explicite, ancrage au standard de fiabilité |
+| Q9 | Stockage contrefactuel | FNAM 8(10)-(12) : rendement par ratio E/P, moyenne pluriannuelle | Co-optimisation multi-années avec pertes (Ruhnau & Qvist, Kittel) |
+| Q10 | Attribution | FNAM 16 (critères d'orientation, peu prescriptifs) | Identité comptable (Heggarty 2020) ; contrefactuel/Shapley |
+| Q11 | Incertitude quantifiée | Publication de N et α(N) (ERAA) | Intervalles bootstrap, théorie des valeurs extrêmes |
+| Q12 | V&V | Contrôles ACER, publication | Rétro-simulation publiée, benchmark |
 
 ## 4. Sources
 

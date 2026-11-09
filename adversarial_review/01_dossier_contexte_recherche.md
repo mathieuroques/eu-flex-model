@@ -55,7 +55,18 @@ Légende de fiabilité utilisée tout au long du dossier :
 - **§7** : les rapports nationaux sont transmis et publiés. **L'ACER, dans les 12 mois, émet un rapport qui les analyse** et formule des recommandations sur les questions transfrontalières, notamment sur la suppression des obstacles à la flexibilité non fossile (article 15 du règlement 2019/942 tel que modifié).
 - **Article 19f §1** : chaque État membre définit, sur la base du rapport, un objectif national indicatif de flexibilité non fossile, incluant les contributions spécifiques de la réponse de la demande et du stockage.
 
-**Conséquence pour l'outil [FAIT/HYP]** : le règlement n'impose pas à l'ACER de produire sa propre simulation paneuropéenne. Il lui confie l'analyse des rapports nationaux et des recommandations transfrontalières. EU-Flex est un instrument que l'ACER s'est donné pour remplir ce mandat (README : rapport FNA européen prévu en juillet 2027). [HYP] Ses résultats serviront de référence comparative face aux rapports nationaux, établis selon la FNAM, et nourriront des recommandations ayant un effet sur les objectifs de l'article 19f. **Exigence implicite qui en découle : les indicateurs d'EU-Flex doivent être définis exactement comme ceux de la FNAM, sinon la comparaison avec les rapports nationaux est biaisée.**
+**Texte intégral vérifié (EUR-Lex, CELEX 32024R1747), compléments décisifs [FAIT] :**
+
+- **19e(1)(a)** : le rapport national doit être « consistent with the European resource adequacy assessment and national resource adequacy assessments ».
+- **19e(2)(a)** : évaluer les besoins « at least on a seasonal, daily and hourly basis […] **inter alia, different assumptions in respect to electricity market prices, generation and demand** ». **Des sensibilités aux hypothèses de prix sont donc exigées.**
+- **19e(4)(b)(i)** : tenir compte de « all available sources of flexibility in a cost-efficient manner in the different timeframes, including in other Member States ».
+- **19e(7)** : dans les 12 mois, l'ACER émet un rapport analysant les rapports nationaux. Parmi les questions transfrontalières, l'ACER **évalue** : (a) l'intégration de l'analyse des besoins de flexibilité avec la méthodologie ERAA et le TYNDP ; **(b) « the estimated flexibility needs in the electricity system at Union level and its projected economically available potential for a period of the next 5 to 10 years taking into account the national reports »** ; (c) d'autres mesures pour libérer le potentiel de flexibilité.
+
+**Conséquence pour l'outil [FAIT, corrigé]** : la première version de ce dossier affirmait que le règlement n'imposait pas à l'ACER sa propre évaluation paneuropéenne. **C'est inexact.** L'art. 19e(7)(b) charge l'ACER d'évaluer **les besoins de flexibilité au niveau de l'Union** et le **potentiel économiquement disponible** (ce qui justifie la présence d'une EVA). EU-Flex est l'instrument de cette évaluation. Trois exigences en découlent :
+
+1. indicateurs définis comme ceux de la FNAM (comparabilité avec les rapports nationaux) ;
+2. **un niveau Union**, et pas seulement zonal ;
+3. **des sensibilités aux hypothèses de prix** (19e(2)(a)).
 
 ### 2.2 Méthodologie FNA, Décision ACER 05/2025, annexe I [FAIT, R2]
 
@@ -91,7 +102,8 @@ Points structurants, avec le numéro d'article de la version consolidée :
 ### 2.3 Plafonds de prix harmonisés (HMMCP) [FAIT partiel, R4]
 
 - Le mécanisme d'ajustement automatique du prix maximal SDAC (seuil de déclenchement en % du plafond, nombre de MTU et de jours dans une fenêtre glissante de 30 jours, incrément, période de transition) a été **amendé à plusieurs reprises** (Décision 01/2023, puis 02/2026).
-- **[MANQUE]** Les paramètres en vigueur au 9/11/2026 (seuil de 60 % ou 70 %, incrément de +500 ou +1 000 €/MWh, plafond de référence, durée de transition de 28 jours) n'ont pas pu être confirmés sur le texte consolidé. EU-Flex code en dur : seuil de 70 % du plafond **initial**, incrément configurable (500), transition de 28 jours, détection « au moins 2 jours distincts sur 30 jours glissants, toutes zones confondues ».
+- **[FAIT, vérifié sur le texte]** Décision ACER 01/2023, annexe 1, art. 4 : plafond de référence SDAC **+4 000 €/MWh** (plancher −500). Hausse de **+500 €/MWh** si le prix de clôture, **dans au moins une zone**, dépasse **70 % du plafond harmonisé en vigueur**, pendant au moins 2 MTU sur au moins 2 jours différents, dans les 30 jours glissants qui suivent le premier pic. **Période de transition de 28 jours.** La Décision ACER 02/2026 amende la méthodologie sur les **conditions d'exclusion** (pics non représentatifs, liquidité, découplage d'un NEMO) sans modifier ces paramètres.
+- **Comparaison avec EU-Flex** : incrément, fenêtre, transition et règle « au moins une zone » sont conformes. **Écart** : le seuil est calculé sur 70 % du plafond **initial** (`spike_threshold = starting_price_or * 0.7`) et non du plafond **en vigueur**, ce qui déclenche trop facilement les hausses successives. Les conditions d'exclusion de 2026 ne sont pas modélisées. Plafond de départ par défaut : 5 000 €/MWh (hypothèse prospective, et non la valeur de référence de 4 000).
 
 ---
 
@@ -170,5 +182,51 @@ Exigences dérivées des sources ci-dessus. Le rapport les cite sous la forme «
 - M1 : papier ACER 2026 (figures 9-18) pour comparer quantitativement les résultats teaser.
 - M2 : données d'entrée réelles (ERAA, PECD, prévisions historiques J-1, PNEC, FBMC).
 - M3 : suite de tests et historique de développement de la plateforme privée.
-- M4 : texte consolidé en vigueur de la méthodologie HMMCP SDAC/SIDC.
-- M5 : texte intégral du guide JRC (R6).
+- ~~M4 : texte HMMCP~~ : **résolu**, voir §2.3 (Décisions 01/2023 et 02/2026 lues).
+- M5 : texte intégral du guide JRC (R6), non récupéré.
+- M6 : documents primaires d'Elia (AdeqFlex 2025, méthodologie de flexibilité de court terme) : **accès refusé (HTTP 403)** par téléchargement direct et par récupération web ; seuls des extraits de recherche des documents Elia ont été exploités.
+
+---
+
+## 7. Inventaire d'accès aux sources (vérification du 9/11/2026, après la question « as-tu bien récupéré les documents ? »)
+
+| Source | Accès | Mode de lecture | Usage |
+|---|---|---|---|
+| FNAM, Décision ACER 05/2025 (consolidée + annexe Ia en suivi de modifications) | ✅ PDF intégral | Texte extrait, art. 1-10 lus intégralement | Référentiel principal |
+| Règlement 2024/1747 (art. 19e, 19f) | ✅ HTML intégral EUR-Lex | Texte extrait, art. 19e cité verbatim (§2.1) | Corrections apportées au §2.1 |
+| Spécification EU-Flex v1.0 (142 p.), manuel, code | ✅ intégral | Lu ; équations rendues en image p. 92-109 | Objet de l'audit |
+| Méthodologie ERAA révisée (Décision ACER 04/2026, annexe Ia, 66 p.) | ✅ PDF intégral | Articles sur le dispatch économique, le Monte-Carlo, l'hydraulique et l'EVA lus | Référentiel ERAA |
+| ACER, Décision 07/2025 ERAA 2024 : annexe III technique, annexe Ie (EVA fondée sur les revenus) | ✅ PDF intégral | Chapitre EVA lu | Écart EVA/ED |
+| ERAA 2024, rapport exécutif (version approuvée et amendée d'août 2025) | ✅ PDF intégral | Recherché | Contexte |
+| ACER, Décision 06/2024 (ERAA 2023) | ✅ PDF intégral | Téléchargé, parcouru | Contexte |
+| HMMCP : Décision 01/2023 (annexe 1), Décision 02/2026 | ✅ PDF intégral | Paramètres lus | §2.3 |
+| Kittel, Roth, Schill (arXiv 2411.17683) ; Gøtske et al. (arXiv 2404.12178) ; Pinson et al. 2009 ; Lannoye, Flynn, O'Malley (UCD) | ✅ PDF intégral | Affirmations vérifiées par recherche dans le texte | État de l'art |
+| Heggarty et al. 2019/2020 (HAL) | ❌ page anti-robot | Résumé seulement | État de l'art (marqué [LIT]) |
+| Palmintier & Webster 2014 (MIT DSpace, CORE) | ❌ 404/403 | Résumé et notice seulement | État de l'art (marqué [LIT]) |
+| Elia AdeqFlex 2025 et méthodologie de flexibilité de court terme | ❌ 403 (elia.be) | Extraits de recherche des documents Elia | Pratique industrielle (marqué « source secondaire ») |
+| Guide JRC (JRC146931) | ❌ non tenté en texte intégral | Notice seulement | Contexte |
+| Ruhnau & Qvist 2022 | ⚠️ résumé (DOAJ/IOP) | Résumé | État de l'art |
+| Papier ACER « Preparing for the European flexibility needs assessment » (2026) | ❌ introuvable | — | Figures 9-18 non comparées |
+
+### 7.1 Hypothèses méthodologiques de référence extraites des textes intégraux
+
+**Méthodologie ERAA (Décision ACER 04/2026, annexe Ia)**
+
+- **Prévision parfaite** dans le dispatch économique : « Unless the modelling framework allows for a proper characterisation of unforeseen imbalances, the ED shall rely on a "perfect foresight" principle: […] forecast errors of wind, solar, hydro generation, of planned outages as well as of demand are ignored in the ED. Additionally, unplanned outages are assumed to be known in advance. » → **La référence industrielle européenne ignore elle-même les erreurs de prévision** ; EU-Flex va au-delà avec un DA et un ID.
+- **MTU** : « The MTU shall be smaller than or equal to an hour. » → le pas horaire est conforme à l'ERAA, mais pas au marché réel (15 min depuis le 1/10/2025) ni à la granularité de la FNAM 10(1)(e).
+- **Climat** : PECD avec corrélations inter-zones et inter-temporelles ; scénarios centraux fondés soit sur la meilleure projection climatique, soit sur des années climatiques pondérées, soit sur **au plus les 30 années historiques les plus récentes**.
+- **Monte-Carlo** : années MC = années climatiques × tirages de pannes (au moins thermiques et interconnexions) ; **convergence par le coefficient de variation de l'ENS** avec critère d'arrêt ; publication de N et de α(N).
+- **Hydraulique** : pré-optimisation *ex ante* à pas grossier (hebdomadaire ou saisonnier) autorisée, respect des trajectoires min/max ; elle doit refléter les « expected operational principles » des exploitants. → La pré-optimisation d'EU-Flex est **conforme au standard ERAA** ; la critique de la valeur de l'eau (revue M7) porte sur la recherche, pas sur l'ERAA.
+- **EVA** : soit viabilité fondée sur les revenus (rendement attendu comparé au taux de rendement exigé ou au WACC), soit minimisation du coût total (simplification sous concurrence parfaite). **Atténuation de la réaction des investisseurs aux pics de prix** : par défaut, « partial discounting of Monte Carlo sample years with the highest revenues ».
+
+**ERAA 2024 (annexe III technique de la décision ACER)**
+
+- EVA formulée en minimisation du coût ; **3 scénarios météo dans l'EVA contre 36 dans le dispatch**. L'ACER constate des écarts de LOLE moyenne de **1,7 à 4 h** entre l'EVA et le dispatch, et des revenus gaz différents : « scarcity situations and pricing are not accurately reflected in the EVA, distorting investment signals ».
+
+**Elia (source secondaire)**
+
+- Besoins de flexibilité de court terme en 3 étapes, avec **convolution** des distributions (erreurs de prévision et pannes) ; **percentiles 0,1 % et 99,9 %** ; métriques « slow », « fast » et « ramping » (rampe ≤ 5 min).
+
+**Kittel, Roth, Schill**
+
+- 35 années météo, modélisation **d'été à été** : « our summer-to-summer modeling approach better captures the effects of compound drought events spanning across the turn of years, as compared to models using single calendar years » ; épisode extrême : hiver 1996/97 ; jusqu'à 351 TWh de stockage longue durée.
