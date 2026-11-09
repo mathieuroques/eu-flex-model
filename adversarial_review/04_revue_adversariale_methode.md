@@ -89,7 +89,7 @@ Chaque composant suit la même structure : ce que fait EU-Flex, ce que fait l'é
 
 - **EU-Flex** : le DA optimise sur 72 h de **prévisions** connues d'avance. L'ID ré-optimise sur 72 h de **réalisations** connues d'avance : toute l'erreur des 72 prochaines heures est révélée d'un coup. Le blocage dynamique de la FRR est calculé à partir de **l'erreur réalisée** (spécification éq. 9.7-9.8). Le stockage infrajournalier peut se pré-positionner des heures avant un écart qui, dans la réalité, n'est connu que progressivement.
 - **État de l'art (référentiel 05, B5, consensus établi en recherche, émergent dans l'industrie)** : CAISO enchaîne DA, RUC, marché à 15 min et dispatch à 5 min, avec un produit de rampe flexible couvrant l'incertitude résiduelle ; WILMAR (étude All-Island) et PLEXOS pratiquent la planification glissante stochastique et l'optimisation multi-étapes. Concrètement : révélation séquentielle (prévisions glissantes, plusieurs points de décision ID, équilibrage en temps réel) et réserves dimensionnées *ex ante* sur la distribution de l'erreur. *Plancher réglementaire* : l'ERAA admet la prévision parfaite (art. 4(1)(g)). EU-Flex le dépasse, mais **ce plancher n'est pas un étalon**. Détail : révélation séquentielle (prévisions glissantes, plusieurs points de décision ID, équilibrage en temps réel ; planification glissante stochastique de type WILMAR) ; réserves dimensionnées *ex ante* sur la distribution de l'erreur.
-- **Attaque** : la grandeur que la FNAM veut mesurer — la capacité du système à absorber l'**imprévu** — est simulée avec un oracle. Tout déficit de court terme mesuré par différence ID − DA est donc une **borne basse** : l'ID « voit venir » les écarts. Expérience E-H (§4) : réduire l'horizon à 36 h avec 12 h de recouvrement ne change presque pas les déficits (+0,3 %), mais augmente les démarrages de 25 à 38 %. Ce test ne lève pas l'oracle (36 h de réalisations restent connues), et l'outil ne permet pas de révélation horaire. **L'ampleur du biais reste à mesurer** ; c'est une priorité de validation.
+- **Attaque** : la grandeur que la FNAM veut mesurer — la capacité du système à absorber l'**imprévu** — est simulée avec un oracle. Tout déficit de court terme mesuré par différence ID − DA est donc une **borne basse** : l'ID « voit venir » les écarts. Expérience E-H (§4) : réduire l'horizon des deux marchés à 36 h ne change presque pas les déficits (+0,3 %). En revanche, **réduire la seule prévision intraday à 8 h augmente les déficits de court terme de +13 à +22 %** (§4.5), et 1 % des fenêtres deviennent infaisables. C'est une borne inférieure de l'effet, puisque 8 h de réalisations restent connues d'avance.
 - **Remède** : ID en fenêtres courtes successives (par ex. horizon de 1 à 4 h, mises à jour horaires), prévisions intermédiaires (J-1 → H-6 → H-1), réserves dimensionnées *ex ante* (SO GL 157 ou dimensionnement dynamique), activation des réserves en temps réel contre l'erreur résiduelle.
 
 ### M5 — Résolution temporelle (Q5 / B6) · **Majeure** (au-dessus du plancher ERAA, en deçà de l'état de l'art établi)
@@ -266,7 +266,24 @@ La viabilité des actifs de pointe et de flexibilité repose sur **quelques diza
 
 ### 4.5 Résultats des expériences longues
 
-*[À compléter à la fin des runs : oracle 8 h, engagement entier à 10 unités, trajectoire EVA complète.]*
+**Oracle intraday : prévision réduite de 72 h à 8 h** (fenêtres de 8 h, 4 h retenues ; DA inchangé ; mode tolérant ; preuve : `evidence/oracle_h8_vs_baseline.txt`)
+
+| Indicateur | 72 h (référence) | 8 h | Écart |
+|---|---|---|---|
+| ST shortfall ENS, N2 (GWh) | 3,71 | 4,53 | **+22 %** |
+| ENS ID, N2 (GWh) | 5,93 | 6,75 | +14 % |
+| ST shortfall écrêtement (GWh, signé), N1 / N2 | +1 772 / −1 072 | +2 000 / −907 | +13 % / +15 % |
+| Écrêtement ID (TWh), N1 et N2 | 7,03 / 4,89 | 7,26 / 5,05 | +3,3 % |
+| Coût variable ID (G€) | 6,50 | 6,69 | +2,8 % |
+| Contribution journalière iDSR, N1 / N2 / N3 (TWh) | 0,60 / 0,71 / 0,35 | 0,46 / 0,37 / 0,82 | −23 % / −48 % / +136 % |
+| Besoins FNAM 8(5), P99,9 | — | — | 0,0 % |
+| Fenêtres intraday infaisables | 0 / 183 | **22 / 2 190 (1 %)** | — |
+
+**Lecture.** Le sens du biais (M4) est **confirmé** : moins de prévision, c'est plus de déficits de court terme (+13 à +22 %) et plus de coûts. Ce test est une borne **inférieure** de l'effet, car l'ID garde 8 h de réalisations parfaitement connues ; une révélation horaire avec prévisions intermédiaires l'accentuerait. Les **contributions** attribuées à la DSR implicite changent de −48 % à +136 % : l'attribution est aussi sensible à la structure d'information. La formulation n'est pas robuste à une prévision courte (1 % de fenêtres infaisables malgré le délestage ; infaisabilité bloquante en mode par défaut).
+
+**Engagement entier à 10 unités** : *[run en cours ; à compléter]*
+
+**EVA complète** : voir §4.4(e). La boucle ne dépasse pas l'itération 2, ni en mode par défaut ni en mode tolérant.
 
 ## 5. Matrice d'écarts contre le référentiel d'état de l'art (`05`)
 

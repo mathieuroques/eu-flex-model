@@ -105,7 +105,7 @@ The metric also does not measure value. Implicit DSR receives about 2 % of the d
 ## 4. Information structure and time resolution
 
 **4.1 Intraday perfect foresight.**
-The intraday stage solves 72-hour windows with the realised values known in advance, and FRR blocking uses the realised forecast error. Imbalances are therefore anticipated hours ahead, which biases short-term needs **downwards** by construction. [Insert result of shorter-foresight bounding runs.]
+The intraday stage solves 72-hour windows with the realised values known in advance, and FRR blocking uses the realised forecast error. Imbalances are therefore anticipated hours ahead, which biases short-term needs **downwards** by construction. In our test, shortening the intraday foresight from 72 h to 8 h (still perfect within the 8 h) raised short-term ENS shortfall by 22 % and the curtailment shortfall by 13-15 %. It also moved implicit-DSR contributions by −48 % to +136 % and made 1 % of intraday windows infeasible despite load shedding. This is a lower bound on the effect.
 → **Request:** sequential information revelation (forecast updates at intraday gates, balancing stage with ex-ante sized reserves), and publication of the value-of-information gap.
 
 **4.2 Hourly resolution.**
@@ -163,7 +163,7 @@ The Modelling Specification (§5) foresees unit, regression and historical valid
 |---|---|---|
 | Probabilistic margins exclude storage, RES and interconnectors ; FRR deducted | ↑ overestimation | Measured (teaser) |
 | Incomplete revenue stack for flexible assets → EVA under-builds flexibility | ↑ | By construction |
-| Intraday perfect foresight | ↓ underestimation | By construction ; magnitude [to insert] |
+| Intraday perfect foresight | ↓ underestimation | Measured: +13-22 % on short-term deficits with 8 h foresight (lower bound) |
 | Hourly resolution | ↓ for fast needs | Literature |
 | Lossless dummy storage ; single, calendar-cut years | ↓ storage needs | By construction / literature |
 | Perfect-foresight hydro plan | ↓ | By construction |

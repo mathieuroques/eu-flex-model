@@ -26,7 +26,7 @@ L'architecture est saine : un outil ouvert, une simulation de marché day-ahead 
 | Prix de rareté qui fixe l'équilibre EVA (4 500 ou 10 000 €/MWh) | Niveau d'adéquation « convergé » : **5,4-8,4 h** contre **2,4-3,7 h** de rareté par an |
 | Source des erreurs de prévision (bruit synthétique par défaut ou prévisions fournies) | Besoin de court terme P99,9 **×2,3** |
 | Méthode de court terme (« simulation » ou « probabiliste ») | Écart de plus de **×1 000** |
-| Prévision intraday (72 h, 24 h ou 8 h de réalisations connues d'avance) | [à compléter] |
+| Prévision intraday (72 h ou 8 h de réalisations connues d'avance) | 8 h : déficits de court terme **+13 à +22 %** (borne basse de l'effet) ; contributions DSR −48 % à +136 % ; 1 % de fenêtres infaisables |
 | Stockage fictif avec ou sans pertes réalistes | Avec pertes, le besoin calculé **baisse** (4 h, cible 2 % : 97,5 → 22,4 GW) : l'énergie dissipée compte comme EnR « intégrée ». **La métrique récompense le gaspillage** |
 | Toutes les conventions ci-dessus | Besoins « descriptifs » (art. 8(5)) **inchangés** : ils ne mesurent pas une insuffisance |
 
